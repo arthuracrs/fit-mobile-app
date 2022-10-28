@@ -1,15 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 
-import Exercice from '../../components/exercice'
-
-export default function Home() {
+export default function HomeScreen({ navigation }) {
 
     const exerciceList = ['Exercicio 1', 'Exercicio 2', 'Exercicio 3']
 
     return (
         <View style={styles.container}>
             <Text>Home</Text>
-            {exerciceList.map((x, id) => <Exercice key={id} title={x} />)}
+            <Button title="Go to Workout" onPress={() => navigation.navigate('Workout')}/>
         </View>
     );
 }
@@ -18,5 +16,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });

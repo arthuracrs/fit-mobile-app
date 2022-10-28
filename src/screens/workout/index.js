@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 
 import Exercice from '../../components/exercice'
 
-export default function Workout() {
+export default function WorkoutScreen({ navigation }) {
   const exerciceFactory = (size) => {
     let exercices = []
     for (let i = 0; i < size; i++) {
       const newExercice = {
         name: 'Exercice ' + (i + 1),
-        done: true
+        done: false
       }
 
       exercices.push(newExercice)
@@ -40,13 +40,15 @@ export default function Workout() {
     setExercicesList(exercicesList)
   }
 
+  const navigateToHome = () => navigation.navigate('Home')
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.progress}>Progress {doneExercices}/{totalExercices}</Text>
       <ScrollView>
         {exercicesList.map((x, id) =>
-          <Exercice key={id} item={x} id={id} handleUpdateDone={handleUpdateDone} />
+          <Exercice navigateToHome={navigateToHome} key={id} item={x} id={id} handleUpdateDone={handleUpdateDone} />
         )}
       </ScrollView>
     </View>
