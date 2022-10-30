@@ -40,7 +40,7 @@ export default function WorkoutScreen({ navigation }) {
     setExercicesList(exercicesList)
   }
 
-  const navigateToHome = () => navigation.navigate('Home')
+  const navigateToHome = () => navigation.navigate('Exercise')
 
   return (
     <View style={styles.container}>
