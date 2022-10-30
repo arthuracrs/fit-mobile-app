@@ -29,9 +29,9 @@ export default function ExerciseScreen({ navigation, route }) {
       </View >)
   }
 
-  function Series({ series }) {
+  function Circle({ number, text }) {
     const styles = StyleSheet.create({
-      seriesCircle: {
+      circle: {
         borderColor: 'gray',
         borderWidth: 5,
         borderRadius: 100,
@@ -40,57 +40,24 @@ export default function ExerciseScreen({ navigation, route }) {
         justifyContent: 'center',
         alignItems: 'center'
       },
-      seriesView: {
-        width: 100,
-        height: 100,
-        alignItems: 'center'
-      },
-      seriesText: {
-        fontWeight: '700',
-        fontSize: 18,
-        color: 'gray',
-      },
-    });
-
-    return (
-      <View style={styles.seriesView}>
-        <View style={styles.seriesCircle}>
-          <Text style={styles.seriesText}>{series}</Text>
-        </View>
-        <Text style={styles.seriesText}>Series</Text>
-      </View>
-    )
-  }
-
-  function Repetitions({ repetitions }) {
-    const styles = StyleSheet.create({
-      repetitionsCircle: {
-        borderColor: 'gray',
-        borderWidth: 5,
-        borderRadius: 100,
-        width: 80,
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
-      repetitionsView: {
+      circleView: {
         width: 110,
         height: 110,
         alignItems: 'center'
       },
-      repetitionsText: {
+      circleText: {
         fontWeight: '700',
         fontSize: 18,
-        color: 'gray',
+        color: 'black',
       },
     });
 
     return (
-      <View style={styles.repetitionsView}>
-        <View style={styles.repetitionsCircle}>
-          <Text style={styles.repetitionsText}>{repetitions}</Text>
+      <View style={styles.circleView}>
+        <View style={styles.circle}>
+          <Text style={styles.circleText}>{number}</Text>
         </View>
-        <Text style={styles.repetitionsText}>Repetitions</Text>
+        <Text style={styles.circleText}>{text}</Text>
       </View>
     )
   }
@@ -106,8 +73,8 @@ export default function ExerciseScreen({ navigation, route }) {
         <DoneSign done={exercise.done} />
       </View>
       <View style={styles.circles}>
-        <Repetitions repetitions={exercise.repetitions} />
-        <Series series={exercise.series} />
+        <Circle number={exercise.repetitions} text='Repetitions'/>
+        <Circle number={exercise.series} text='Series'/>
       </View>
       <View style={styles.interval}>
         <MaterialCommunityIcons name="clock" size={40} color="black" />
@@ -131,9 +98,9 @@ const styles = StyleSheet.create({
     height: 300,
     resizeMode: 'cover'
   },
-  circles:{
+  circles: {
     marginTop: 50,
-    flexDirection:'row',
+    flexDirection: 'row',
     justifyContent: 'space-between'
   },
   interval: {
