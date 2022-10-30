@@ -8,8 +8,11 @@ export default function WorkoutScreen({ navigation }) {
     let exercices = []
     for (let i = 0; i < size; i++) {
       const newExercice = {
-        name: 'Exercice ' + (i + 1),
-        done: false
+        name: 'Exercise ' + (i + 1),
+        done: true,
+        series: 5,
+        repetitions: 102,
+        interval: 30
       }
 
       exercices.push(newExercice)
@@ -22,12 +25,12 @@ export default function WorkoutScreen({ navigation }) {
     let num = 0
 
     for (let i = 0; i < exercicesList.length; i++) {
-      if(exercicesList[i].done === true) num++
+      if (exercicesList[i].done === true) num++
     }
 
     return num
   }
-  
+
   const title = 'Workout';
   const [exercicesList, setExercicesList] = useState(exerciceFactory(3));
   const [doneExercices, setDoneExercices] = useState(getDoneExercices(exercicesList));
@@ -40,7 +43,7 @@ export default function WorkoutScreen({ navigation }) {
     setExercicesList(exercicesList)
   }
 
-  const navigateToHome = () => navigation.navigate('Exercise')
+  const navigateToHome = (x) => navigation.navigate('Exercise', { exercise: x })
 
   return (
     <View style={styles.container}>
@@ -48,7 +51,7 @@ export default function WorkoutScreen({ navigation }) {
       <Text style={styles.progress}>Progress {doneExercices}/{totalExercices}</Text>
       <ScrollView>
         {exercicesList.map((x, id) =>
-          <Exercice navigateToHome={navigateToHome} key={id} item={x} id={id} handleUpdateDone={handleUpdateDone} />
+          <Exercice navigateToHome={() => navigateToHome(x)} key={id} item={x} id={id} handleUpdateDone={handleUpdateDone} />
         )}
       </ScrollView>
     </View>
