@@ -12,7 +12,9 @@ export default function WorkoutScreen({ navigation }) {
         done: true,
         series: 5,
         repetitions: 102,
-        interval: 30
+        interval: 30,
+        mediaUrl: "https://i.pinimg.com/originals/d8/4c/e3/d84ce3448cc82ea9abe9ea7421bfc029.gif",
+        media2: "https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/attachments/delivery/asset/7471e64bf36dd74cb4c52b2dec40690b-1605191302/5%20workout%20gif/create-workout-exercise-gif-animation-in-photoshop.gif"
       }
 
       exercices.push(newExercice)
