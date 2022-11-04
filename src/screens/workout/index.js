@@ -3,25 +3,8 @@ import { useState, useEffect } from "react";
 
 import Exercice from '../../components/exercice'
 
-export default function WorkoutScreen({ navigation }) {
-  const exerciceFactory = (size) => {
-    let exercices = []
-    for (let i = 0; i < size; i++) {
-      const newExercice = {
-        name: 'Exercise ' + (i + 1),
-        done: true,
-        series: 5,
-        repetitions: 102,
-        interval: 30,
-        mediaUrl: "https://i.pinimg.com/originals/d8/4c/e3/d84ce3448cc82ea9abe9ea7421bfc029.gif",
-        media2: "https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/attachments/delivery/asset/7471e64bf36dd74cb4c52b2dec40690b-1605191302/5%20workout%20gif/create-workout-exercise-gif-animation-in-photoshop.gif"
-      }
-
-      exercices.push(newExercice)
-    }
-
-    return exercices
-  }
+export default function WorkoutScreen({ navigation, route }) {
+  const { workout } = route.params
 
   const getDoneExercices = (exercicesList) => {
     let num = 0
@@ -33,8 +16,7 @@ export default function WorkoutScreen({ navigation }) {
     return num
   }
 
-  const title = 'Workout';
-  const [exercicesList, setExercicesList] = useState(exerciceFactory(3));
+  const [exercicesList, setExercicesList] = useState(workout.exercicesList);
   const [doneExercices, setDoneExercices] = useState(getDoneExercices(exercicesList));
   const totalExercices = exercicesList.length
 
@@ -49,7 +31,7 @@ export default function WorkoutScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{workout.name}</Text>
       <Text style={styles.progress}>Progress {doneExercices}/{totalExercices}</Text>
       <ScrollView>
         {exercicesList.map((x, id) =>

@@ -7,7 +7,9 @@ export default function HomeScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <Text>Home</Text>
-            <Button title="Go to Workout" onPress={() => navigation.navigate('Workout')}/>
+            <View style={styles.button} >
+                <Button style={styles.button} title="Go to Schedule" onPress={() => navigation.navigate('Schedule')} />
+            </View>
         </View>
     );
 }
@@ -19,4 +21,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    button: {
+        marginVertical: 20
+    }
 });
