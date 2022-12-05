@@ -1,65 +1,50 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { useState, useEffect } from "react";
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import { useState, useEffect, useContext } from "react";
 
+import { GeneralStateContext } from '../../context'
 import Workout from '../../components/workout';
+import { CONSTANTS } from '../../consts'
 
 export default function ScheduleScreen({ navigation }) {
 
-  const workoutFactory = (size) => {
-    const exerciceFactory = (size) => {
-      let exercices = []
-      for (let i = 0; i < size; i++) {
-        const newExercice = {
-          name: 'Exercise ' + (i + 1),
-          done: true,
-          series: 5,
-          repetitions: 102,
-          interval: 30,
-          mediaUrl: "https://i.pinimg.com/originals/d8/4c/e3/d84ce3448cc82ea9abe9ea7421bfc029.gif",
-          media2: "https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/attachments/delivery/asset/7471e64bf36dd74cb4c52b2dec40690b-1605191302/5%20workout%20gif/create-workout-exercise-gif-animation-in-photoshop.gif"
-        }
+  const contextData = useContext(GeneralStateContext);
 
-        exercices.push(newExercice)
+  const [isLoading, setIsLoading] = useState(true);
+  const [workoutList, setWorkoutList] = useState([]);
+
+  const navigateToWorkoutScreen = (workout) => navigation.navigate('Workout', { workout })
+
+  const getContent = async () => {
+    const token = await contextData.firebase.auth.currentUser.getIdToken(true)
+    fetch(`${CONSTANTS.BACKEND_URL}/schedule/10`, {
+      headers: {
+        authtoken: token
       }
-
-      return exercices
-    }
-
-    let workouts = []
-
-    for (let i = 0; i < size; i++) {
-      const workout = {
-        name: 'Workout ' + (i + 1),
-        exercicesList: exerciceFactory(3),
-      }
-
-      workouts.push(workout)
-    }
-
-    return workouts
+    })
+      .then(response => response.json())
+      .then((responseJson) => {
+        setWorkoutList(responseJson)
+        setIsLoading(false)
+      })
+      .catch(error => console.log(error))
   }
 
-  const title = 'Schedule';
-  const [workoutList, setWorkoutList] = useState(workoutFactory(3));
-
-  const handleUpdateDone = (id) => {
-    const newStatus = !exercicesList[id].done
-    exercicesList[id].done = newStatus
-    setDoneExercices(getDoneExercices(exercicesList))
-    setExercicesList(exercicesList)
-  }
-
-  const navigateToWorkoutScreen = (x) => navigation.navigate('Workout', { workout: x })
+  useEffect(() => {
+    getContent()
+  }, [])
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.progress}>Progress 1/3</Text>
-      <ScrollView>
-        {workoutList.map((workout, index) =>
-          <Workout key={index} navigateToWorkoutScreen={() => navigateToWorkoutScreen(workout)} item={workout} />
-        )}
-      </ScrollView>
+      {isLoading ? <ActivityIndicator size={'large'} /> :
+        <>
+          <Text style={styles.title}>Schedule</Text>
+          <ScrollView>
+            {workoutList.map((workout, index) =>
+              <Workout key={index} navigateToWorkoutScreen={() => navigateToWorkoutScreen(workout)} item={workout} />
+            )}
+          </ScrollView>
+        </>
+      }
     </View>
   );
 }
