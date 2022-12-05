@@ -6,14 +6,17 @@ export const GeneralStateContext = createContext({});
 
 export const GeneralStateProvider = (props) => {
     const [updateRequireAuthRoutes, setUpdateRequireAuthRoutes] = useState(false)
+    const [userData, setUserData] = useState({})
 
-    const updateFom = () => {
+    const handleUpdateRequireAuthRoutes = () => {
         setUpdateRequireAuthRoutes(!updateRequireAuthRoutes)
     }
 
     const contextData = {
-        updateFom,
-        text: 'kkk',
+        handleUpdateRequireAuthRoutes,
+        updateRequireAuthRoutes,
+        userData,
+        setUserData,
         firebase: {
             auth
         }

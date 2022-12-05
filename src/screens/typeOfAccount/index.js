@@ -1,12 +1,11 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text, Button } from "react-native";
 import { useState, useContext } from "react";
-import { useNavigation } from '@react-navigation/native';
 import { GeneralStateContext } from '../../context'
 
 import { CONSTANTS } from '../../consts'
 
-export default function TypeOfAccountScreen({ navigation, route }) {
+export default function TypeOfAccountScreen() {
     const contextData = useContext(GeneralStateContext);
 
     const handleSelection = async (type) => {
@@ -19,7 +18,7 @@ export default function TypeOfAccountScreen({ navigation, route }) {
             },
         })
             .then((x) => {
-                contextData.updateFom()
+                contextData.handleUpdateRequireAuthRoutes()
             })
             .catch(error => console.log(error))
     }

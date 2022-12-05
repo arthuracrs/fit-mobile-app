@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text>Welcome {auth.currentUser.displayName}</Text>
+            <Text>Welcome {contextData.userData.type} {auth.currentUser.displayName}</Text>
             <View style={styles.button} >
                 <Button title="Trainner" onPress={() => handleSelection('trainner')} />
                 <Button style={styles.button} title="Go to Schedule" onPress={() => navigation.navigate('Schedule')} />
