@@ -11,11 +11,13 @@ export default function TypeOfAccountScreen() {
     const handleSelection = async (type) => {
         const auth = contextData.firebase.auth
         const token = await auth.currentUser.getIdToken(true)
-        fetch(`${CONSTANTS.BACKEND_URL}/` + type, {
+        fetch(`${CONSTANTS.BACKEND_URL}/user/type`, {
             method: 'POST',
             headers: {
-                authtoken: token
+                "Content-type": "application/json; charset=UTF-8",
+                authtoken: token,
             },
+            body: JSON.stringify({ type })
         })
             .then((x) => {
                 contextData.handleUpdateRequireAuthRoutes()
