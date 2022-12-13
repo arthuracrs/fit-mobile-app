@@ -1,16 +1,13 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text, Button, Alert } from "react-native";
 import { useState, useContext } from "react";
-import { useNavigation } from '@react-navigation/native';
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { GeneralStateContext } from '../../context'
 
 export default function SignInScreen({ navigation }) {
-    const contextData = useContext(GeneralStateContext);
-
-    // const navigation = useNavigation();
+    const contextData = useContext(GeneralStateContext)
 
     const [log, setLog] = useState("Log Vazio");
     const [email, onChangeEmail] = useState("Email@gmail.com");

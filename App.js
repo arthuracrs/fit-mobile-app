@@ -10,8 +10,6 @@ import RequireAuthRoutes from "./src/components/requireAuthRoutes";
 
 import { GeneralStateProvider, GeneralStateContext } from './src/context'
 
-import { CONSTANTS } from './src/consts'
-
 export default function App() {
   const contextData = useContext(GeneralStateContext);
 
