@@ -4,8 +4,10 @@ import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 
 import Loading from "../../components/loading";
-import StudentRoutes from "../../components/studentRoutes";
-import TrainerHomeScreen from '../../screens/trainerHome'
+import StudentHomeScreen from '../../screens/studentHome'
+import WorkoutScreen from '../../screens/workout';
+import ExerciseScreen from '../../screens/exercise';
+import ScheduleScreen from '../../screens/schedule';
 import TypeOfAccountScreen from "../../screens/typeOfAccount";
 
 import { GeneralStateContext } from '../../context'
@@ -14,7 +16,7 @@ import { CONSTANTS } from '../../consts'
 
 const Stack = createNativeStackNavigator();
 
-export default function RequireAuthRoutes() {
+export default function StudentRoutes() {
   const contextData = useContext(GeneralStateContext);
   const [isLoading, setIsLoading] = useState(true)
   const [errorloading, setErrorloading] = useState(false)
@@ -40,18 +42,15 @@ export default function RequireAuthRoutes() {
           console.log(error);
         })
     })
+
   }, [contextData.updateRequireAuthRoutes])
 
-  return (<>
-    {
-      isLoading ? <Loading error={errorloading} /> :
-        contextData.userData.type == ''
-          ?
-          <TypeOfAccountScreen />
-          : contextData.userData.type == 'student'
-            ? <StudentRoutes />
-            : <TrainerHomeScreen />
-    }
-  </>
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={StudentHomeScreen} />
+      <Stack.Screen name="Schedule" component={ScheduleScreen} />
+      <Stack.Screen name="Workout" component={WorkoutScreen} />
+      <Stack.Screen name="Exercise" component={ExerciseScreen} />
+    </Stack.Navigator>
   );
 }

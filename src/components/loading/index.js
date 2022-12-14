@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, SafeAreaView, Image, ActivityIndicator } from '
 // import LoadingGif from '. /loading.gif'
 import LoadingGif from '../../../assets/loading.gif'
 
-export default function Loading({ number, text }) {
+export default function Loading({ error }) {
     const styles = StyleSheet.create({
         view: {
             alignItems: 'center',
@@ -22,9 +22,15 @@ export default function Loading({ number, text }) {
     });
 
     return (
-        <View style={styles.view}>
-            <Image style={styles.image} source={LoadingGif} />
-            <Text style={styles.text}>Loading</Text>
-        </View>
+        <>
+            {error ?
+                <View style={styles.view}>
+                    <Text style={styles.text}>Error</Text>
+                </View>
+                : <View style={styles.view}>
+                    <Image style={styles.image} source={LoadingGif} />
+                    <Text style={styles.text}>Loading</Text>
+                </View>}
+        </>
     )
 }

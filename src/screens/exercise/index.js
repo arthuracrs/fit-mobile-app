@@ -30,12 +30,20 @@ export default function ExerciseScreen({ navigation, route }) {
       </View >)
   }
 
+  console.log()
+
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{ uri: exercise.mediaUrl }}
-      />
+      {exercise.exerciseModelId.media.map((image, index) => {
+        return (
+          <Image
+            key={index}
+            style={styles.image}
+            source={{ uri: image.url }}
+          />
+        )
+      })}
+
       <View>
         <Text style={styles.title}>{exercise.name}</Text>
         <DoneSign done={exercise.done} />

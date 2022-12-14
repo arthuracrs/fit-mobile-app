@@ -6,25 +6,25 @@ import Exercice from '../../components/exercice'
 export default function WorkoutScreen({ navigation, route }) {
   const { workout } = route.params
 
-  const getDoneExercices = (exercicesList) => {
+  const getDoneExercises = (exercisesList) => {
     let num = 0
 
-    for (let i = 0; i < exercicesList.length; i++) {
-      if (exercicesList[i].done === true) num++
+    for (let i = 0; i < exercisesList.length; i++) {
+      if (exercisesList[i].done === true) num++
     }
 
     return num
   }
 
-  const [exercicesList, setExercicesList] = useState(workout.exercicesList);
-  const [doneExercices, setDoneExercices] = useState(getDoneExercices(exercicesList));
-  const totalExercices = exercicesList.length
+  const [exercisesList, setExercisesList] = useState(workout.exercisesList);
+  const [doneExercises, setDoneExercises] = useState(getDoneExercises(exercisesList));
+  const totalExercices = exercisesList.length
 
   const handleUpdateDone = (id) => {
-    const newStatus = !exercicesList[id].done
-    exercicesList[id].done = newStatus
-    setDoneExercices(getDoneExercices(exercicesList))
-    setExercicesList(exercicesList)
+    const newStatus = !exercisesList[id].done
+    exercisesList[id].done = newStatus
+    setDoneExercises(getDoneExercises(exercisesList))
+    setExercisesList(exercisesList)
   }
 
   const navigateToHome = (x) => navigation.navigate('Exercise', { exercise: x })
@@ -32,10 +32,10 @@ export default function WorkoutScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{workout.name}</Text>
-      <Text style={styles.progress}>Progress {doneExercices}/{totalExercices}</Text>
+      <Text style={styles.progress}>Progress {doneExercises}/{totalExercices}</Text>
       <ScrollView>
-        {exercicesList.map((x, id) =>
-          <Exercice navigateToHome={() => navigateToHome(x)} key={id} item={x} id={id} handleUpdateDone={handleUpdateDone} />
+        {exercisesList.map((x, id) =>
+          <Exercice navigateToHome={() => navigateToHome(x)} key={id} item={x.exerciseModelId} id={id} handleUpdateDone={handleUpdateDone} />
         )}
       </ScrollView>
     </View>

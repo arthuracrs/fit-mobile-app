@@ -25,6 +25,8 @@ export default function Exercice({ navigateToHome, item, handleUpdateDone, id })
     }
   });
 
+  console.log(item)
+
   return (
     <TouchableOpacity onPress={navigateToHome} >
       <View style={styles.container}>

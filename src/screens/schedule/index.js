@@ -6,7 +6,6 @@ import Workout from '../../components/workout';
 import { CONSTANTS } from '../../consts'
 
 export default function ScheduleScreen({ navigation }) {
-
   const contextData = useContext(GeneralStateContext);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -16,17 +15,23 @@ export default function ScheduleScreen({ navigation }) {
 
   const getContent = async () => {
     const token = await contextData.firebase.auth.currentUser.getIdToken(true)
-    fetch(`${CONSTANTS.BACKEND_URL}/schedule/10`, {
+    // fetch(`${CONSTANTS.BACKEND_URL}/fakeSchedule/10`, {
+    fetch(`${CONSTANTS.BACKEND_URL}/schedule/63979d38f8eaeaf11006a889`, {
       headers: {
         authtoken: token
       }
     })
       .then(response => response.json())
       .then((responseJson) => {
-        setWorkoutList(responseJson)
+        console.log('====================================')
+        console.log(responseJson)
+        setWorkoutList(responseJson.workoutsList)
         setIsLoading(false)
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        
+        console.log(error)
+      })
   }
 
   useEffect(() => {
