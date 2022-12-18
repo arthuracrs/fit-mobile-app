@@ -1,10 +1,33 @@
 import { StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from 'axios'
 
+import { CONSTANTS } from '../../consts'
+import { GeneralStateContext } from '../../context'
+
 export default function Exercice({ navigateToExerciseScreen, exercise }) {
+  const contextData = useContext(GeneralStateContext);
   const [isEnabled, setIsEnabled] = useState(exercise.done);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState)
+  const toggleSwitch = async () => {
+    await updateDoneStatus(!isEnabled)
+  }
+
+  const updateDoneStatus = async (doneStatus) => {
+    const token = await contextData.firebase.auth.currentUser.getIdToken(true)
+    console.log(exercise.workoutId)
+    try {
+      await axios.put(`${CONSTANTS.BACKEND_URL}/exercise/${exercise.exerciseId}/workout/${exercise.workoutId}/${doneStatus ? 'done' : 'undone'}`, {}, {
+        headers: {
+          'authtoken': token,
+        }
+      })
+
+      console.log(`updateDoneStatus | sucesso no update para ${doneStatus ? 'done' : 'undone'}`)
+      setIsEnabled(previousState => !previousState)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -30,7 +53,7 @@ export default function Exercice({ navigateToExerciseScreen, exercise }) {
         <Switch
           trackColor={{ false: "#767577", true: "darkgray" }}
           thumbColor={isEnabled ? "lightgreen" : "#f4f3f4"}
-          onValueChange={toggleSwitch}
+          onChange={toggleSwitch}
           value={isEnabled}
         />
       </View>

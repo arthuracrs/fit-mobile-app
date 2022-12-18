@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 
-import Loading from "../../components/loading";
-import StudentRoutes from "../../components/studentRoutes";
+
 import TrainerHomeScreen from '../../screens/trainerHome'
 import TypeOfAccountScreen from "../../screens/typeOfAccount";
 
+import Loading from "../../components/loading";
+import StudentRoutes from "../../components/studentRoutes";
 import { GeneralStateContext } from '../../context'
 
 import { CONSTANTS } from '../../consts'

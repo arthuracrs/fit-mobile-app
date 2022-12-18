@@ -7,7 +7,7 @@ export default function WorkoutScreen({ navigation, route }) {
   const { workout } = route.params
 
   const getDoneExercises = (exercisesList) => {
-    let num = 0
+    let num = 0 
 
     for (let i = 0; i < exercisesList.length; i++)
       if (exercisesList[i].done === true) num++
@@ -27,7 +27,7 @@ export default function WorkoutScreen({ navigation, route }) {
           <Exercice
             navigateToExerciseScreen={() => navigation.navigate('Exercise', { exercise: item })}
             key={index}
-            exercise={item.exerciseModelId}
+            exercise={{...item.exerciseModelId, workoutId: workout.workoutId, ...item}}
           />
         )}
       </ScrollView>
