@@ -1,35 +1,40 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text, Button } from "react-native";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState, useContext } from "react";
-import { GeneralStateContext } from '../../context'
 
+import { GeneralStateContext } from '../../context'
 import { CONSTANTS } from '../../consts'
 
 export default function TypeOfAccountScreen() {
-    const contextData = useContext(GeneralStateContext);
+    const Stack = createNativeStackNavigator();
 
-    const handleSelection = async (type) => {
-        const auth = contextData.firebase.auth
-        const token = await auth.currentUser.getIdToken(true)
-        fetch(`${CONSTANTS.BACKEND_URL}/user/type`, {
-            method: 'POST',
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                authtoken: token,
-            },
-            body: JSON.stringify({ type })
-        })
-            .then((x) => {
-                contextData.handleUpdateRequireAuthRoutes()
-            })
-            .catch(error => console.log(error))
-    }
+    const TypeOfAccount = ({ navigation }) => (
+        <View style={styles.container}>
+            <Button title="Trainner" onPress={() => navigation.navigate('TrainerRegisterInfo')} />
+            <Button title="Student" onPress={() => navigation.navigate('StudentRegisterInfo')} />
+        </View>
+    )
+
+    const TrainerRegisterInfo = ({ navigation }) => (
+        <View style={styles.container}>
+            <Text style={styles.text}>You need to register as a trainer on the website</Text>
+            <Button title="Go to the Website" onPress={() => handleSelection('student')} />
+        </View>
+    )
+
+    const StudentRegisterInfo = ({ navigation }) => (
+        <View style={styles.container}>
+            <Text style={styles.text}>Ask for your trainer for the student link, to get access to your schedule</Text>
+        </View>
+    )
 
     return (
-        <View style={styles.container}>
-            <Button title="Trainner" onPress={() => handleSelection('trainer')} />
-            <Button title="Student" onPress={() => handleSelection('student')} />
-        </View>
+        <Stack.Navigator>
+            <Stack.Screen name="TypeOfAccount" component={TypeOfAccount} />
+            <Stack.Screen name="TrainerRegisterInfo" component={TrainerRegisterInfo} />
+            <Stack.Screen name="StudentRegisterInfo" component={StudentRegisterInfo} />
+        </Stack.Navigator>
     );
 }
 
@@ -45,4 +50,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
     },
+    text: {
+        textAlign: 'center'
+    }
 });

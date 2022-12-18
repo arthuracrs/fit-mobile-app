@@ -15,7 +15,7 @@ export default function ScheduleScreen({ navigation }) {
 
   const getContent = async () => {
     const token = await contextData.firebase.auth.currentUser.getIdToken(true)
-    // fetch(`${CONSTANTS.BACKEND_URL}/fakeSchedule/10`, {
+
     fetch(`${CONSTANTS.BACKEND_URL}/schedule/63979d38f8eaeaf11006a889`, {
       headers: {
         authtoken: token

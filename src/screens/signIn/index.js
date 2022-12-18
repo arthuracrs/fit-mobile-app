@@ -23,18 +23,7 @@ export default function SignInScreen({ navigation }) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
 
-                Alert.alert(
-                    "Alert Title",
-                    "My Alert Msg",
-                    [
-                        {
-                            text: "Cancel",
-                            onPress: () => console.log("Cancel Pressed"),
-                            style: "cancel"
-                        },
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                );
+                setLog({ errorCode })
             });
     }
 

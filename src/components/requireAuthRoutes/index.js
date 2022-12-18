@@ -1,5 +1,3 @@
-import { StyleSheet, View } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 
@@ -11,8 +9,6 @@ import TypeOfAccountScreen from "../../screens/typeOfAccount";
 import { GeneralStateContext } from '../../context'
 
 import { CONSTANTS } from '../../consts'
-
-const Stack = createNativeStackNavigator();
 
 export default function RequireAuthRoutes() {
   const contextData = useContext(GeneralStateContext);
@@ -39,6 +35,7 @@ export default function RequireAuthRoutes() {
           setErrorloading(true)
           console.log(error);
         })
+        
     })
   }, [contextData.updateRequireAuthRoutes])
 

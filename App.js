@@ -20,14 +20,12 @@ export default function App() {
     const sub = onAuthStateChanged(auth, async (authUser) => {
       if (authUser !== null) {
         console.log('onAuthStateChanged | autenticou')
-        console.log(authUser)
         setLoggedUser(authUser)
-        setIsLoading(false)
       } else {
         console.log('onAuthStateChanged | falha em autenticar')
         setLoggedUser(null)
-        setIsLoading(false)
       }
+      setIsLoading(false)
     });
 
     return sub
