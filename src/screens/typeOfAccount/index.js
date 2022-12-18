@@ -2,24 +2,32 @@ import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text, Button } from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState, useContext } from "react";
+import * as Linking from 'expo-linking';
+import { signOut } from "firebase/auth";
 
 import { GeneralStateContext } from '../../context'
 import { CONSTANTS } from '../../consts'
 
 export default function TypeOfAccountScreen() {
+    const contextData = useContext(GeneralStateContext);
+    const auth = contextData.firebase.auth
+    
     const Stack = createNativeStackNavigator();
 
     const TypeOfAccount = ({ navigation }) => (
         <View style={styles.container}>
             <Button title="Trainner" onPress={() => navigation.navigate('TrainerRegisterInfo')} />
             <Button title="Student" onPress={() => navigation.navigate('StudentRegisterInfo')} />
+            <View style={styles.sigout}>
+                <Button style={styles.button} title="Logout" onPress={() => signOut(auth)} />
+            </View>
         </View>
     )
 
     const TrainerRegisterInfo = ({ navigation }) => (
         <View style={styles.container}>
             <Text style={styles.text}>You need to register as a trainer on the website</Text>
-            <Button title="Go to the Website" onPress={() => handleSelection('student')} />
+            <Button title="Go to the Website" onPress={() => Linking.openURL(`${CONSTANTS.BACKEND_URL}/health`)} />
         </View>
     )
 
@@ -52,5 +60,13 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: 'center'
+    },
+    sigout:{
+        marginTop: 50
+    },
+    button: {
+        display: 'flex',
+        // marginTop: 50,
+        // marginVertical: 20
     }
 });

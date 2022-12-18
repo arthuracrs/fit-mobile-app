@@ -10,8 +10,8 @@ export default function SignInScreen({ navigation }) {
     const contextData = useContext(GeneralStateContext)
 
     const [log, setLog] = useState("Log Vazio");
-    const [email, onChangeEmail] = useState("Email@gmail.com");
-    const [password, onChangePassword] = useState('Ffffff');
+    const [email, onChangeEmail] = useState("student@fit.test");
+    const [password, onChangePassword] = useState('Bbbbbb');
 
     const SignIn = async () => {
         const auth = contextData.firebase.auth

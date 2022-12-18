@@ -3,55 +3,59 @@ import { useState, useEffect, useContext } from "react";
 
 import { GeneralStateContext } from '../../context'
 import Workout from '../../components/workout';
+import Loading from "../../components/loading";
 import { CONSTANTS } from '../../consts'
 
 export default function ScheduleScreen({ navigation }) {
   const contextData = useContext(GeneralStateContext);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [workoutList, setWorkoutList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
+  const [retry, setRetry] = useState(true)
+  const [errorloading, setErrorloading] = useState(false)
 
-  const navigateToWorkoutScreen = (workout) => navigation.navigate('Workout', { workout })
+  const [workoutList, setWorkoutList] = useState([])
 
-  const getContent = async () => {
-    const token = await contextData.firebase.auth.currentUser.getIdToken(true)
-
-    fetch(`${CONSTANTS.BACKEND_URL}/schedule/63979d38f8eaeaf11006a889`, {
-      headers: {
-        authtoken: token
-      }
-    })
-      .then(response => response.json())
-      .then((responseJson) => {
-        console.log('====================================')
-        console.log(responseJson)
-        setWorkoutList(responseJson.workoutsList)
-        setIsLoading(false)
-      })
-      .catch(error => {
-        
-        console.log(error)
-      })
+  const handleRetry = () => {
+    setErrorloading(false)
+    setIsLoading(true)
+    setRetry(!retry)
   }
 
   useEffect(() => {
-    getContent()
-  }, [])
+    console.log('ScheduleScreen | começou busca de usuario no DB')
+    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
+      fetch(`${CONSTANTS.BACKEND_URL}/schedule/${contextData.userData.student.currentSchedule}`, {
+        headers: {
+          authtoken: token
+        }
+      })
+        .then(response => response.json())
+        .then((responseJson) => {
+          console.log('ScheduleScreen | sucesso na busca de usuario no DB')
+          setWorkoutList(responseJson.workoutsList)
+          setIsLoading(false)
+        })
+        .catch(error => {
+          setErrorloading(true)
+          console.log(error)
+        })
+    })
+  }, [retry])
 
   return (
-    <View style={styles.container}>
-      {isLoading ? <ActivityIndicator size={'large'} /> :
-        <>
+    <>
+      {isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> :
+        <View style={styles.container}>
           <Text style={styles.title}>Schedule</Text>
           <ScrollView>
             {workoutList.map((workout, index) =>
-              <Workout key={index} navigateToWorkoutScreen={() => navigateToWorkoutScreen(workout)} item={workout} />
+              <Workout key={index} navigateToWorkoutScreen={() => navigation.navigate('Workout', { workout })} item={workout} />
             )}
           </ScrollView>
-        </>
+        </View>
       }
-    </View>
-  );
+    </>
+  )
 }
 
 const styles = StyleSheet.create({

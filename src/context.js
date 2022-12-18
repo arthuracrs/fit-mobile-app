@@ -1,12 +1,12 @@
 import { createContext, useState } from "react";
 
 import { auth } from './firebaseConfig'
- 
+
 export const GeneralStateContext = createContext({});
 
 export const GeneralStateProvider = (props) => {
     const [updateRequireAuthRoutes, setUpdateRequireAuthRoutes] = useState(false)
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState(null)
 
     const handleUpdateRequireAuthRoutes = () => {
         setUpdateRequireAuthRoutes(!updateRequireAuthRoutes)

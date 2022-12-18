@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios'
 
-export default function Exercice({ navigateToHome, item, handleUpdateDone, id }) {
-  const [isEnabled, setIsEnabled] = useState(item.done);
-  const toggleSwitch = () => {
-    handleUpdateDone(id)
-    setIsEnabled(previousState => !previousState);
-  }
+export default function Exercice({ navigateToExerciseScreen, exercise }) {
+  const [isEnabled, setIsEnabled] = useState(exercise.done);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState)
 
   const styles = StyleSheet.create({
     container: {
@@ -25,12 +23,10 @@ export default function Exercice({ navigateToHome, item, handleUpdateDone, id })
     }
   });
 
-  console.log(item)
-
   return (
-    <TouchableOpacity onPress={navigateToHome} >
+    <TouchableOpacity onPress={navigateToExerciseScreen} >
       <View style={styles.container}>
-        <Text style={styles.text}>{item.name}</Text>
+        <Text style={styles.text}>{exercise.name}</Text>
         <Switch
           trackColor={{ false: "#767577", true: "darkgray" }}
           thumbColor={isEnabled ? "lightgreen" : "#f4f3f4"}

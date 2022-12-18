@@ -30,8 +30,6 @@ export default function ExerciseScreen({ navigation, route }) {
       </View >)
   }
 
-  console.log()
-
   return (
     <View style={styles.container}>
       {exercise.exerciseModelId.media.map((image, index) => {

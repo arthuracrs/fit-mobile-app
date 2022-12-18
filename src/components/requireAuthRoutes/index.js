@@ -12,11 +12,19 @@ import { CONSTANTS } from '../../consts'
 
 export default function RequireAuthRoutes() {
   const contextData = useContext(GeneralStateContext);
+
   const [isLoading, setIsLoading] = useState(true)
+  const [retry, setRetry] = useState(true)
   const [errorloading, setErrorloading] = useState(false)
 
+  const handleRetry = () => {
+    setErrorloading(false)
+    setIsLoading(true)
+    setRetry(!retry)
+  }
+
   useEffect(() => {
-    console.log('getUser | começou busca de usuario no DB')
+    console.log('RequireAuthRoutes | começou busca de usuario no DB')
 
     contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
       axios.get(`${CONSTANTS.BACKEND_URL}/user`, {
@@ -25,23 +33,24 @@ export default function RequireAuthRoutes() {
         }
       })
         .then(function (response) {
-          console.log('getUser | sucesso na busca de usuario no DB')
-          const result = response.data
-          console.log(result)
-          contextData.setUserData(result)
+          console.log('RequireAuthRoutes | sucesso na busca de usuario no DB')
+          const user = response.data
+
+          contextData.setUserData(user)
+
           setIsLoading(false)
         })
         .catch(function (error) {
           setErrorloading(true)
           console.log(error);
         })
-        
+
     })
-  }, [contextData.updateRequireAuthRoutes])
+  }, [contextData.updateRequireAuthRoutes, retry])
 
   return (<>
     {
-      isLoading ? <Loading error={errorloading} /> :
+      isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> :
         contextData.userData.type == ''
           ?
           <TypeOfAccountScreen />
