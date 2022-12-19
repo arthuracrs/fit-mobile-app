@@ -35,10 +35,9 @@ export default function RequireAuthRoutes() {
       })
         .then(function (response) {
           console.log('RequireAuthRoutes | sucesso na busca de usuario no DB')
+          
           const user = response.data
-
           contextData.setUserData(user)
-
           setIsLoading(false)
         })
         .catch(function (error) {
@@ -47,7 +46,7 @@ export default function RequireAuthRoutes() {
         })
 
     })
-  }, [contextData.updateRequireAuthRoutes, retry])
+  }, [retry])
 
   return (<>
     {

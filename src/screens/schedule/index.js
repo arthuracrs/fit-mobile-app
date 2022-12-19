@@ -31,7 +31,7 @@ export default function ScheduleScreen({ navigation }) {
         .then((responseJson) => {
           console.log('ScheduleScreen | sucesso na busca de usuario no DB')
 
-          contextData.updateCurrentSchedule(responseJson)
+          contextData.setCurrentSchedule(responseJson)
           setIsLoading(false)
         })
         .catch(error => {

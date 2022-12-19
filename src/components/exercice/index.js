@@ -24,7 +24,7 @@ export default function Exercice({ navigateToExerciseScreen, exercise }) {
       console.log(`updateDoneStatus | sucesso no update para ${doneStatus ? 'done' : 'undone'}`)
 
       setIsEnabled(previousState => !previousState)
-      contextData.update()
+      contextData.setShouldLoadCurrentSchedule(x => !x)
     } catch (error) {
       console.log(error);
     }
