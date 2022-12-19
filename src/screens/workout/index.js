@@ -1,13 +1,17 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Exercice from '../../components/exercice'
+import { GeneralStateContext } from '../../context'
 
 export default function WorkoutScreen({ navigation, route }) {
-  const { workout } = route.params
+  const { workoutIndex } = route.params
+  const contextData = useContext(GeneralStateContext);
+
+  const workout = contextData.currentSchedule.workoutsList[workoutIndex]
 
   const getDoneExercises = (exercisesList) => {
-    let num = 0 
+    let num = 0
 
     for (let i = 0; i < exercisesList.length; i++)
       if (exercisesList[i].done === true) num++
@@ -25,9 +29,9 @@ export default function WorkoutScreen({ navigation, route }) {
       <ScrollView>
         {workout.exercisesList.map((item, index) =>
           <Exercice
-            navigateToExerciseScreen={() => navigation.navigate('Exercise', { exercise: item })}
+            navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex })}
             key={index}
-            exercise={{...item.exerciseModelId, workoutId: workout.workoutId, ...item}}
+            exercise={{ ...item.exerciseModelId, workoutId: workout.workoutId, ...item }}
           />
         )}
       </ScrollView>

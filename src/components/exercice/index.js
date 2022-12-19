@@ -8,13 +8,12 @@ import { GeneralStateContext } from '../../context'
 export default function Exercice({ navigateToExerciseScreen, exercise }) {
   const contextData = useContext(GeneralStateContext);
   const [isEnabled, setIsEnabled] = useState(exercise.done);
-  const toggleSwitch = async () => {
-    await updateDoneStatus(!isEnabled)
-  }
 
-  const updateDoneStatus = async (doneStatus) => {
+  const toggleSwitch = async () => await updateRemoteDoneStatus(!isEnabled)
+
+  const updateRemoteDoneStatus = async (doneStatus) => {
     const token = await contextData.firebase.auth.currentUser.getIdToken(true)
-    console.log(exercise.workoutId)
+
     try {
       await axios.put(`${CONSTANTS.BACKEND_URL}/exercise/${exercise.exerciseId}/workout/${exercise.workoutId}/${doneStatus ? 'done' : 'undone'}`, {}, {
         headers: {
@@ -23,7 +22,9 @@ export default function Exercice({ navigateToExerciseScreen, exercise }) {
       })
 
       console.log(`updateDoneStatus | sucesso no update para ${doneStatus ? 'done' : 'undone'}`)
+
       setIsEnabled(previousState => !previousState)
+      contextData.update()
     } catch (error) {
       console.log(error);
     }

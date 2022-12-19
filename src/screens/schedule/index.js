@@ -13,8 +13,6 @@ export default function ScheduleScreen({ navigation }) {
   const [retry, setRetry] = useState(true)
   const [errorloading, setErrorloading] = useState(false)
 
-  const [workoutList, setWorkoutList] = useState([])
-
   const handleRetry = () => {
     setErrorloading(false)
     setIsLoading(true)
@@ -32,7 +30,8 @@ export default function ScheduleScreen({ navigation }) {
         .then(response => response.json())
         .then((responseJson) => {
           console.log('ScheduleScreen | sucesso na busca de usuario no DB')
-          setWorkoutList(responseJson.workoutsList)
+
+          contextData.updateCurrentSchedule(responseJson)
           setIsLoading(false)
         })
         .catch(error => {
@@ -40,7 +39,7 @@ export default function ScheduleScreen({ navigation }) {
           console.log(error)
         })
     })
-  }, [retry])
+  }, [retry, contextData.shouldLoadCurrentSchedule])
 
   return (
     <>
@@ -48,8 +47,8 @@ export default function ScheduleScreen({ navigation }) {
         <View style={styles.container}>
           <Text style={styles.title}>Schedule</Text>
           <ScrollView>
-            {workoutList.map((workout, index) =>
-              <Workout key={index} navigateToWorkoutScreen={() => navigation.navigate('Workout', { workout })} item={workout} />
+            {contextData.currentSchedule.workoutsList.map((workout, index) =>
+              <Workout key={index} navigateToWorkoutScreen={() => navigation.navigate('Workout', { workoutIndex: index })} item={workout} />
             )}
           </ScrollView>
         </View>

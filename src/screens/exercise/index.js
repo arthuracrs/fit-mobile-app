@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
 import Circle from '../../components/circle'
+import { GeneralStateContext } from '../../context'
 
 export default function ExerciseScreen({ navigation, route }) {
+  const contextData = useContext(GeneralStateContext);
+  const { exerciseIndex, workoutIndex } = route.params
 
-  const { exercise } = route.params
+  const exercise = contextData.currentSchedule.workoutsList[workoutIndex].exercisesList[exerciseIndex]
 
   function DoneSign({ done }) {
     const styles = StyleSheet.create({
@@ -41,7 +44,6 @@ export default function ExerciseScreen({ navigation, route }) {
           />
         )
       })}
-
       <View>
         <Text style={styles.title}>{exercise.name}</Text>
         <DoneSign done={exercise.done} />
