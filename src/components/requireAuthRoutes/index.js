@@ -3,6 +3,7 @@ import axios from 'axios'
 
 
 import TrainerHomeScreen from '../../screens/trainerHome'
+import TrainerRoutes from '../trainerRoutes'
 import TypeOfAccountScreen from "../../screens/typeOfAccount";
 
 import Loading from "../../components/loading";
@@ -56,7 +57,7 @@ export default function RequireAuthRoutes() {
           <TypeOfAccountScreen />
           : contextData.userData.type == 'student'
             ? <StudentRoutes />
-            : <TrainerHomeScreen />
+            : <TrainerRoutes />
     }
   </>
   );

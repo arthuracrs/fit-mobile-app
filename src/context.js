@@ -8,6 +8,7 @@ export const GeneralStateProvider = (props) => {
     
     const [userData, setUserData] = useState(null)
     const [currentSchedule, setCurrentSchedule] = useState({})
+    const [trainerStudents, setTrainerStudents] = useState({})
     
     const [shouldLoadCurrentSchedule, setShouldLoadCurrentSchedule] = useState(false)
 
@@ -18,6 +19,8 @@ export const GeneralStateProvider = (props) => {
         setCurrentSchedule,
         shouldLoadCurrentSchedule,
         setShouldLoadCurrentSchedule,
+        trainerStudents,
+        setTrainerStudents,
         firebase: {
             auth
         }

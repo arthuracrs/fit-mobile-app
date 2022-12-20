@@ -12,7 +12,7 @@ export default function TrainerHomeScreen({ navigation }) {
         <View style={styles.container}>
             <Text>Welcome {contextData.userData.type} {auth.currentUser.displayName}</Text>
             <View style={styles.button} >
-    
+                <Button style={styles.button} title="Go to Students" onPress={() => navigation.navigate('Students')} />
                 <Button style={styles.button} title="Logout" onPress={() => signOut(auth)} />
             </View>
         </View>
