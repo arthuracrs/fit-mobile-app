@@ -31,7 +31,7 @@ export default function WorkoutTrainerViewScreen({ navigation, route }) {
           <Exercice
             navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex })}
             key={index}
-            exercise={{ ...item.exerciseModelId, workoutId: workout.workoutId, ...item }}
+            exercise={{ workoutId: workout.workoutId, ...item }}
           />
         )}
       </ScrollView>

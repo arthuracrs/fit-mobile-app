@@ -10,7 +10,7 @@ export default function ExerciseScreen({ navigation, route }) {
   const { exerciseIndex, workoutIndex } = route.params
 
   const exercise = contextData.currentSchedule.workoutsList[workoutIndex].exercisesList[exerciseIndex]
-
+  console.log(exercise)
   function DoneSign({ done }) {
     const styles = StyleSheet.create({
       container: {
