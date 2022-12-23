@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from './src/firebaseConfig'
 import AuthRoutes from "./src/components/authRoutes";
-import Loading from "./src/components/loading";
+import Loading from "./src/components/shared/loading";
 import RequireAuthRoutes from "./src/components/requireAuthRoutes";
 
 import { GeneralStateProvider, GeneralStateContext } from './src/context'
