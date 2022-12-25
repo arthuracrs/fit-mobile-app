@@ -4,7 +4,6 @@ import { useState, useEffect, useContext } from "react";
 import { GeneralStateContext } from '../../../../context'
 import Workout from '../../../shared/workout';
 import AddNewWorkoutButton from './addNewWorkoutButton'
-import NewWorkoutForm from './NewWorkoutForm'
 
 export default function StudentProfileScreen({ navigation, route }) {
   const [editMode, setEditMode] = useState(false)
@@ -15,13 +14,10 @@ export default function StudentProfileScreen({ navigation, route }) {
   const contextData = useContext(GeneralStateContext);
   const studentProfileData = contextData.trainerStudents[studentIndex]
 
-  const goBackHandler = () => setShowNewWorkoutForm(x => !x)
   const toggleSwitch = async () => setEditMode(x => !x)
 
   return (
-    <>{showNewWorkoutForm ?
-      <NewWorkoutForm goBackHandler={goBackHandler} scheduleId={studentProfileData.currentSchedule.scheduleId}/>
-      :
+    <>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Schedule</Text>
@@ -35,9 +31,13 @@ export default function StudentProfileScreen({ navigation, route }) {
             />
           </View>
         </View>
-        {editMode && <AddNewWorkoutButton handler={() => setShowNewWorkoutForm(x => !x)} />}
+        {editMode && <AddNewWorkoutButton handler={
+          () => navigation.navigate('NewWorkoutForm', {
+            scheduleId: studentProfileData.currentSchedule.scheduleId
+          })
+        } />}
         <ScrollView>
-          
+
           {studentProfileData.currentSchedule.workoutsList.map((workout, index) =>
             <Workout
               key={index}
@@ -47,7 +47,7 @@ export default function StudentProfileScreen({ navigation, route }) {
             />
           )}
         </ScrollView>
-      </View>}
+      </View>
     </>
   )
 }
