@@ -10,7 +10,7 @@ export default function ExerciseScreen({ navigation, route }) {
   const { exerciseIndex, workoutIndex, studentIndex } = route.params
 
   const exercise = contextData.trainerStudents[studentIndex].currentSchedule.workoutsList[workoutIndex].exercisesList[exerciseIndex]
-  console.log(exercise)
+  
   function DoneSign({ done }) {
     const styles = StyleSheet.create({
       container: {
@@ -35,7 +35,6 @@ export default function ExerciseScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.intervalText}> Interval </Text>
       {exercise.exerciseModelId.media.map((image, index) => {
         return (
           <Image

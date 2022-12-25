@@ -1,7 +1,12 @@
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import { useState } from "react";
+import { useState, useContext } from "react";
+import axios from 'axios';
 
-export default function NewWorkoutForm({ goBackHandler }) {
+import { GeneralStateContext } from '../../../../../context'
+import { CONSTANTS } from '../../../../../consts'
+
+export default function NewWorkoutForm({ goBackHandler, scheduleId }) {
+  const contextData = useContext(GeneralStateContext);
   const [name, setName] = useState(false)
 
   const styles = StyleSheet.create({
@@ -24,6 +29,36 @@ export default function NewWorkoutForm({ goBackHandler }) {
     },
   });
 
+  const submit = async () => {
+    const data = {
+      name,
+      scheduleId
+    }
+
+    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
+      axios.post(`${CONSTANTS.BACKEND_URL}/workout`, data, {
+        headers: {
+          'authtoken': token,
+        }
+      })
+        .then(function (response) {
+          console.log('NewWorkoutForm | sucesso na criação de Workout')
+
+          contextData.setShouldLoadCurrentSchedule(x => !x)
+          goBackHandler()
+          // const user = response.data
+          // contextData.setUserData(user)
+          // setIsLoading(false)
+        })
+        .catch(function (error) {
+          // setErrorloading(true)
+          console.log('NewWorkoutForm | erro na criação de Workout')
+          console.log(error);
+        })
+
+    })
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Name:</Text>
@@ -33,7 +68,7 @@ export default function NewWorkoutForm({ goBackHandler }) {
         value={name}
         placeholder="Workout Name"
       />
-      <Button style={styles.button} title="Add Workout" onPress={goBackHandler} />
+      <Button style={styles.button} title="Add Workout" onPress={submit} />
     </View>
   )
 }

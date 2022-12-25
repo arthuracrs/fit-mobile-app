@@ -14,13 +14,13 @@ export default function StudentProfileScreen({ navigation, route }) {
 
   const contextData = useContext(GeneralStateContext);
   const studentProfileData = contextData.trainerStudents[studentIndex]
-  
-  const goBackHandler =() => setShowNewWorkoutForm(x => !x)
+
+  const goBackHandler = () => setShowNewWorkoutForm(x => !x)
   const toggleSwitch = async () => setEditMode(x => !x)
 
   return (
     <>{showNewWorkoutForm ?
-      <NewWorkoutForm goBackHandler={goBackHandler}/>
+      <NewWorkoutForm goBackHandler={goBackHandler} scheduleId={studentProfileData.currentSchedule.scheduleId}/>
       :
       <View style={styles.container}>
         <View style={styles.header}>
@@ -35,8 +35,9 @@ export default function StudentProfileScreen({ navigation, route }) {
             />
           </View>
         </View>
+        {editMode && <AddNewWorkoutButton handler={() => setShowNewWorkoutForm(x => !x)} />}
         <ScrollView>
-          {editMode && <AddNewWorkoutButton handler={() => setShowNewWorkoutForm(x => !x)} />}
+          
           {studentProfileData.currentSchedule.workoutsList.map((workout, index) =>
             <Workout
               key={index}
