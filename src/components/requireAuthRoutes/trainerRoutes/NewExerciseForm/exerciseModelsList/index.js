@@ -2,18 +2,19 @@ import { StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity }
 import { useState, useContext, useEffect } from "react";
 import axios from 'axios';
 
-import Loading from "../../../../shared/loading";
+
+import { NewExerciseFormStateContext } from '../context'
 import { GeneralStateContext } from '../../../../../context'
 import { CONSTANTS } from '../../../../../consts'
 
+import Loading from "../../../../shared/loading";
 import ExerciseModelItem from './exerciseModelItem'
 
 export default function ExerciseModelsList({ navigation, route }) {
 
-    const { scheduleId, workoutId } = route.params
     const contextData = useContext(GeneralStateContext);
+    const formContextData = useContext(NewExerciseFormStateContext);
 
-    const [name, setName] = useState(false)
     const [exerciseModels, setExerciseModels] = useState([])
 
     const [isLoading, setIsLoading] = useState(true)
@@ -26,37 +27,7 @@ export default function ExerciseModelsList({ navigation, route }) {
         setRetry(!retry)
     }
 
-    const submit = async () => {
-        const data = {
-            "exerciseModelId": "4b92b590-64f7-4978-ac5b-aadd3376dd95",
-            scheduleId, workoutId
-        }
-
-        contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
-            axios.post(`${CONSTANTS.BACKEND_URL}/exercise`, data, {
-                headers: {
-                    'authtoken': token,
-                }
-            })
-                .then(function (response) {
-                    console.log('NewExerciseForm | sucesso na criação de Workout')
-
-                    contextData.setShouldLoadCurrentSchedule(x => !x)
-                    navigation.goBack()
-                    // const user = response.data
-                    // contextData.setUserData(user)
-                    // setIsLoading(false)
-                })
-                .catch(function (error) {
-                    // setErrorloading(true)
-                    console.log('NewExerciseForm | erro na criação de Workout')
-                    console.log(error);
-                })
-
-        })
-    }
-
-    const getExerciseModels = async () => {
+    useEffect(() => {
         contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
             axios.get(`${CONSTANTS.BACKEND_URL}/exerciseModel`, {
                 headers: {
@@ -74,10 +45,6 @@ export default function ExerciseModelsList({ navigation, route }) {
                     console.log(error);
                 })
         })
-    }
-
-    useEffect(() => {
-        getExerciseModels()
     }, [])
 
     return (
@@ -88,7 +55,7 @@ export default function ExerciseModelsList({ navigation, route }) {
                 <View style={styles.container}>
                     <FlatList
                         data={exerciseModels}
-                        renderItem={ExerciseModelItem}
+                        renderItem={({ item }) => <ExerciseModelItem goBack={() => navigation.goBack()} item={item} />}
                         numColumns={2}
                         keyExtractor={item => item.exerciseModelId}
                     />
