@@ -20,7 +20,6 @@ export default function ScheduleScreen({ navigation }) {
   }
 
   useEffect(() => {
-    console.log('ScheduleScreen | começou busca de usuario no DB')
     contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
       fetch(`${CONSTANTS.BACKEND_URL}/schedule/${contextData.userData.student.currentSchedule}`, {
         headers: {
@@ -30,7 +29,7 @@ export default function ScheduleScreen({ navigation }) {
         .then(response => response.json())
         .then((responseJson) => {
           console.log('ScheduleScreen | sucesso na busca de usuario no DB')
-
+          
           contextData.setCurrentSchedule(responseJson)
           setIsLoading(false)
         })

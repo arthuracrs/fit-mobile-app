@@ -47,9 +47,9 @@ export default function WorkoutScreen({ navigation, route }) {
             />
           </View>
         </View>
-        <ScrollView>
-          {editMode && <AddNewExerciseButton handler={
+        {editMode && <AddNewExerciseButton handler={
             () => navigation.navigate('NewExerciseForm', { scheduleId, workoutId: workout.workoutId })} />}
+        <ScrollView>
           {workout.exercisesList.map((item, index) =>
             <Exercice
               navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex, studentIndex })}

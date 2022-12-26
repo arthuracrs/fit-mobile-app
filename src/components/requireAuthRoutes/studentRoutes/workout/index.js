@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useState, useEffect, useContext } from "react";
 
-import Exercice from '../../../shared/exercise'
+import ExerciseItem from './exerciseItem'
 import { GeneralStateContext } from '../../../../context'
 
 export default function WorkoutScreen({ navigation, route }) {
@@ -20,15 +20,15 @@ export default function WorkoutScreen({ navigation, route }) {
   }
 
   const doneExercises = getDoneExercises(workout.exercisesList)
-  const totalExercices = workout.exercisesList.length
+  const totalExercises = workout.exercisesList.length
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{workout.name}</Text>
-      <Text style={styles.progress}>Progress {doneExercises}/{totalExercices}</Text>
+      <Text style={styles.progress}>Progress {doneExercises}/{totalExercises}</Text>
       <ScrollView>
         {workout.exercisesList.map((item, index) =>
-          <Exercice
+          <ExerciseItem
             navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex })}
             key={index}
             exercise={{ ...item.exerciseModelId, workoutId: workout.workoutId, ...item }}

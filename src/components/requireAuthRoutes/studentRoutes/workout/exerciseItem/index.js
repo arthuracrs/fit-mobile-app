@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios'
 
-import { CONSTANTS } from '../../../consts'
-import { GeneralStateContext } from '../../../context'
+import { CONSTANTS } from '../../../../../consts'
+import { GeneralStateContext } from '../../../../../context'
 
-export default function Exercise({ navigateToExerciseScreen, exercise }) {
+export default function ExerciseItem({ navigateToExerciseScreen, exercise }) {
   const contextData = useContext(GeneralStateContext);
   const [isEnabled, setIsEnabled] = useState(exercise.done);
 
@@ -15,16 +15,21 @@ export default function Exercise({ navigateToExerciseScreen, exercise }) {
     const token = await contextData.firebase.auth.currentUser.getIdToken(true)
 
     try {
-      await axios.put(`${CONSTANTS.BACKEND_URL}/exercise/${exercise.exerciseId}/workout/${exercise.workoutId}/${doneStatus ? 'done' : 'undone'}`, {}, {
+      axios.put(`${CONSTANTS.BACKEND_URL}/exercise/${exercise.exerciseId}/workout/${exercise.workoutId}/${doneStatus ? 'done' : 'undone'}`, {}, {
         headers: {
           'authtoken': token,
         }
+      }).then(res => {
+
+        console.log(`updateDoneStatus | sucesso no update para ${doneStatus ? 'done' : 'undone'}`)
+
+        setIsEnabled(previousState => !previousState)
+        contextData.setShouldLoadCurrentSchedule(x => !x)
+      }).catch(error => {
+        console.log(error)
+        console.log(`updateDoneStatus | error no update para ${doneStatus ? 'done' : 'undone'}`)
       })
 
-      console.log(`updateDoneStatus | sucesso no update para ${doneStatus ? 'done' : 'undone'}`)
-
-      setIsEnabled(previousState => !previousState)
-      contextData.setShouldLoadCurrentSchedule(x => !x)
     } catch (error) {
       console.log(error);
     }

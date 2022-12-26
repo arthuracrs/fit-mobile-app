@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import StudentHomeScreen from './studentHome'
 import WorkoutScreen from './workout';
-import ExerciseScreen from './exercise';
+import ExerciseScreen from './exerciseScreen';
 import ScheduleScreen from './schedule';
 
 const Stack = createNativeStackNavigator();
