@@ -20,7 +20,7 @@ export default Home = ({ navigation, route }) => {
             scheduleId,
             workoutId
         }
-
+        console.log(data)
         generalContextData.firebase.auth.currentUser.getIdToken(true).then(token => {
             axios.post(`${CONSTANTS.BACKEND_URL}/exercise`, data, {
                 headers: {

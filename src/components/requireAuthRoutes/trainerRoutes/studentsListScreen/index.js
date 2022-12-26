@@ -21,7 +21,6 @@ export default function StudentsListScreen({ navigation }) {
   }
 
   useEffect(() => {
-    console.log('StudentsScreen | começou busca de usuario no DB')
     contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
       axios.get(`${CONSTANTS.BACKEND_URL}/trainer/students`, {
         headers: {

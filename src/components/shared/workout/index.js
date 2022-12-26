@@ -1,25 +1,30 @@
 import { Alert, StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
+
+import { CONSTANTS } from '../../../consts'
+import { GeneralStateContext } from '../../../context'
 
 export default function Workout({ item, navigateToWorkoutScreen, editMode }) {
 
-  const styles = StyleSheet.create({
-    container: {
-      borderRadius: 20,
-      backgroundColor: 'lightgray',
-      marginVertical: 10,
-      height: 80,
-      padding: 20,
-      flexDirection: 'row',
-      justifyContent: 'space-between'
-    },
-    text: {
-      fontSize: 18,
-      color: 'black',
-      fontWeight: '700'
-    }
-  });
+  const contextData = useContext(GeneralStateContext);
+  const deleteWorkout = async (doneStatus) => {
+    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
+      axios.delete(`${CONSTANTS.BACKEND_URL}/workout/${item.workoutId}`, {
+        headers: {
+          'authtoken': token,
+        }
+      }).then(res => {
+        console.log(`deleteWorkout | sucesso deleteando Workout`)
+
+        contextData.setShouldLoadCurrentSchedule(x => !x)
+      }).catch(error => {
+        console.log(`deleteWorkout | error deleteando Workout`)
+        console.log(error);
+      })
+    })
+  }
 
   const deleteHandler = () => {
     //function to make two option alert
@@ -29,7 +34,7 @@ export default function Workout({ item, navigateToWorkoutScreen, editMode }) {
       //body
       'Do you really want to delete this Workout?',
       [
-        { text: 'Yes', onPress: () => console.log('Yes Pressed') },
+        { text: 'Yes', onPress: deleteWorkout },
         {
           text: 'No',
           onPress: () => console.log('No Pressed'),
@@ -54,5 +59,19 @@ export default function Workout({ item, navigateToWorkoutScreen, editMode }) {
   );
 }
 
-
-
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 20,
+    backgroundColor: 'lightgray',
+    marginVertical: 10,
+    height: 80,
+    padding: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  text: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: '700'
+  }
+});

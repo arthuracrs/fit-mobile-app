@@ -28,7 +28,7 @@ export default function SignupScreen({ navigation }) {
                 }).catch((error) => {
                     // An error occurred
                     // ...
-                    console.log('erro aqui')
+                    console.log(error)
                 });
             })
             .catch((error) => {

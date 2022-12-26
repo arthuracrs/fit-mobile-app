@@ -37,7 +37,6 @@ export default function StudentProfileScreen({ navigation, route }) {
           })
         } />}
         <ScrollView>
-
           {studentProfileData.currentSchedule.workoutsList.map((workout, index) =>
             <Workout
               key={index}
