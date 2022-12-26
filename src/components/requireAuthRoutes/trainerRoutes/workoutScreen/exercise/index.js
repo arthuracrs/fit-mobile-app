@@ -10,24 +10,22 @@ export default function Exercise({ navigateToExerciseScreen, exercise, editMode 
   const contextData = useContext(GeneralStateContext);
   const [isEnabled, setIsEnabled] = useState(exercise.done);
 
-  // const updateRemoteDoneStatus = async (doneStatus) => {
-  //   const token = await contextData.firebase.auth.currentUser.getIdToken(true)
+  const deleteExercise = async (doneStatus) => {
+    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
+      axios.delete(`${CONSTANTS.BACKEND_URL}/exercise/${exercise.exerciseId}/workout/${exercise.workoutId}`, {
+        headers: {
+          'authtoken': token,
+        }
+      }).then(res => {
+        console.log(`deleteExercise | sucesso deleteando exercise`)
 
-  //   try {
-  //     await axios.put(`${CONSTANTS.BACKEND_URL}/exercise/${exercise.exerciseId}/workout/${exercise.workoutId}/${doneStatus ? 'done' : 'undone'}`, {}, {
-  //       headers: {
-  //         'authtoken': token,
-  //       }
-  //     })
-
-  //     console.log(`updateDoneStatus | sucesso no update para ${doneStatus ? 'done' : 'undone'}`)
-
-  //     setIsEnabled(previousState => !previousState)
-  //     contextData.setShouldLoadCurrentSchedule(x => !x)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+        contextData.setShouldLoadCurrentSchedule(x => !x)
+      }).catch(error => {
+        console.log(`deleteExercise | error deleteando exercise`)
+        console.log(error);
+      })
+    })
+  }
 
   const deleteHandler = () => {
     //function to make two option alert
@@ -37,7 +35,7 @@ export default function Exercise({ navigateToExerciseScreen, exercise, editMode 
       //body
       'Do you really want to delete this Workout?',
       [
-        { text: 'Yes', onPress: () => console.log('Yes Pressed') },
+        { text: 'Yes', onPress: deleteExercise },
         {
           text: 'No',
           onPress: () => console.log('No Pressed'),
