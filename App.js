@@ -8,11 +8,9 @@ import AuthRoutes from "./src/components/authRoutes";
 import Loading from "./src/components/shared/loading";
 import RequireAuthRoutes from "./src/components/requireAuthRoutes";
 
-import { GeneralStateProvider, GeneralStateContext } from './src/context'
+import { GeneralStateProvider } from './src/context'
 
 export default function App() {
-  const contextData = useContext(GeneralStateContext);
-
   const [isLoading, setIsLoading] = useState(true)
   const [loggedUser, setLoggedUser] = useState(null)
 
