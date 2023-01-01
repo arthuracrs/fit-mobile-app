@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Alert, ActivityIndicator, Switch, Button } from 'react-native';
+import { StyleSheet, Text, View, Share, ScrollView, Alert, ActivityIndicator, Switch, Button } from 'react-native';
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios'
 
@@ -23,14 +23,36 @@ export default function StudentsListScreen({ navigation }) {
     setRetry(!retry)
   }
 
+  const onShare = async () => {
+    console.log("fom fom fom ")
+    try {
+      const result = await Share.share({
+        message:
+          'React Native | A framework for building native apps using React',
+      });
+      if (result.action === Share.sharedAction) {
+        
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   const getTicketLink = () => {
     Alert.alert(
       //title
       'Confirmation',
       //body
-      'Do you really want to delete this Workout?',
+      'Do you really want to genereate a invite link?',
       [
-        { text: 'Yes', onPress: console.log("fom") },
+        { text: 'Yes', onPress: onShare },
         {
           text: 'No',
           onPress: () => console.log('No Pressed'),
