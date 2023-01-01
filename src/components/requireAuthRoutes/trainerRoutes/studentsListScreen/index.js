@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Alert, ActivityIndicator, Switch, Button } from 'react-native';
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios'
 
@@ -10,6 +10,9 @@ import StudentItem from './studentItem'
 export default function StudentsListScreen({ navigation }) {
   const contextData = useContext(GeneralStateContext);
 
+  const [editMode, setEditMode] = useState(false)
+  const toggleSwitch = async () => setEditMode(x => !x)
+
   const [isLoading, setIsLoading] = useState(true)
   const [retry, setRetry] = useState(true)
   const [errorloading, setErrorloading] = useState(false)
@@ -18,6 +21,25 @@ export default function StudentsListScreen({ navigation }) {
     setErrorloading(false)
     setIsLoading(true)
     setRetry(!retry)
+  }
+
+  const getTicketLink = () => {
+    Alert.alert(
+      //title
+      'Confirmation',
+      //body
+      'Do you really want to delete this Workout?',
+      [
+        { text: 'Yes', onPress: console.log("fom") },
+        {
+          text: 'No',
+          onPress: () => console.log('No Pressed'),
+          style: 'cancel',
+        },
+      ],
+      { cancelable: false }
+      //clicking out side of alert will not cancel
+    );
   }
 
   useEffect(() => {
@@ -47,12 +69,34 @@ export default function StudentsListScreen({ navigation }) {
     <>
       {isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> :
         <View style={styles.container}>
-          <Text style={styles.title}>Students</Text>
-          <ScrollView>
-            {contextData.trainerStudents.map((student, index) =>
-              <StudentItem key={index} item={student} navigateToStudentScreen={() => navigation.navigate('StudentProfile', { studentIndex: index })} />
-            )}
-          </ScrollView>
+          <View style={styles.header}>
+            <Text style={styles.title}>Schedule</Text>
+            <View style={styles.switchContainer}>
+              <Text style={{ fontSize: 20, fontWeight: '500' }}>Edit mode</Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "darkgray" }}
+                thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
+                onChange={toggleSwitch}
+                value={editMode}
+              />
+            </View>
+          </View>
+          {editMode &&
+            <Button
+              title="Get Ticket Link"
+              onPress={getTicketLink}
+            />}
+          {contextData.trainerStudents.length !== 0 &&
+            <ScrollView>
+              {contextData.trainerStudents.map((student, index) =>
+                <StudentItem key={index} item={student} navigateToStudentScreen={() => navigation.navigate('StudentProfile', { studentIndex: index })} />
+              )}
+            </ScrollView>}
+          {contextData.trainerStudents.length === 0 &&
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <Text>You do not have any students</Text>
+              <Text>Share a ticket link to your students</Text>
+            </View>}
         </View>
       }
     </>
@@ -64,6 +108,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     padding: 20
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  switchContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    paddingRight: 10,
+    alignItems: 'center'
   },
   title: {
     fontSize: 40,
