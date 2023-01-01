@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from './src/firebaseConfig'
+import { AuthenticationProvider, AuthenticationContext } from "./src/services/authentication/localAuthContext"
 import AuthRoutes from "./src/components/authRoutes";
 import Loading from "./src/components/shared/loading";
 import RequireAuthRoutes from "./src/components/requireAuthRoutes";
@@ -11,36 +12,41 @@ import RequireAuthRoutes from "./src/components/requireAuthRoutes";
 import { GeneralStateProvider } from './src/context'
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [loggedUser, setLoggedUser] = useState(null)
+  const AppRoutes = () => {
+    const authContext = useContext(AuthenticationContext)
+    const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const sub = onAuthStateChanged(auth, async (authUser) => {
-      if (authUser !== null) {
+    useEffect(() => {
+      if (authContext.authenticateduser !== null) {
         console.log('onAuthStateChanged | autenticou')
         
-        setLoggedUser(authUser)
         setIsLoading(false)
       } else {
         console.log('onAuthStateChanged | falha em autenticar')
         setLoggedUser(null)
         setIsLoading(false)
       }
-    });
+    }, [authContext.authenticateduser])
 
-    return sub
-  }, [])
+    return (
+      <>
+        {isLoading ? <Loading /> :
+          authContext.token ?
+            <RequireAuthRoutes />
+            : <AuthRoutes />
+        }
+      </>
+    )
+  }
 
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
-      <GeneralStateProvider>
-        {isLoading ? <Loading /> :
-          loggedUser ?
-            <RequireAuthRoutes />
-            : <AuthRoutes />
-        }
-      </GeneralStateProvider>
+      <AuthenticationProvider>
+        <GeneralStateProvider>
+          <AppRoutes />
+        </GeneralStateProvider>
+      </AuthenticationProvider>
     </NavigationContainer>
   );
 }

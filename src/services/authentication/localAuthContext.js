@@ -7,20 +7,32 @@ export const AuthenticationContext = createContext({});
 export const AuthenticationProvider = (props) => {
 
     const [token, setToken] = useState(null)
+    const [authenticateduser, setAuthenticateduser] = useState(null)
 
     const SignIn = async ({ email, password }) => {
         const token = (await axios.post(`${loginServiceUrl}/login`, { email, password })).data.token
         setToken(token)
     }
 
+    const GetAuthUser = async () => {
+        const user = (await axios.post(`${loginServiceUrl}/validate`, {}, {
+            headers: {
+                authtoken: token
+            }
+        })).data
+        setAuthenticateduser(user)
+    }
+
     const SignOut = () => {
-        setToken(null)
+        setAuthenticateduser(null)
     }
 
     const contextData = {
         SignIn,
         token,
-        SignOut
+        GetAuthUser,
+        SignOut,
+        authenticateduser
     }
 
     return (
