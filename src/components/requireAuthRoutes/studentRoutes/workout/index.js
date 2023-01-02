@@ -8,7 +8,7 @@ export default function WorkoutScreen({ navigation, route }) {
   const { workoutIndex } = route.params
   const contextData = useContext(GeneralStateContext);
 
-  const workout = contextData.currentSchedule.workoutsList[workoutIndex]
+  const workout = contextData.userData.student.currentSchedule.workoutsList[workoutIndex]
 
   const getDoneExercises = (exercisesList) => {
     let num = 0
@@ -31,7 +31,12 @@ export default function WorkoutScreen({ navigation, route }) {
           <ExerciseItem
             navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex })}
             key={index}
-            exercise={{ ...item.exerciseModelId, workoutId: workout.workoutId, ...item }}
+            exercise={{
+              ...item.exerciseModelId,
+              workoutId: workout.workoutId,
+              scheduleId: contextData.userData.student.currentSchedule.scheduleId,
+              ...item
+            }}
           />
         )}
       </ScrollView>

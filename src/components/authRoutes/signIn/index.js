@@ -12,7 +12,7 @@ export default function SignInScreen({ navigation }) {
     const authContext = useContext(AuthenticationContext)
 
     const [log, setLog] = useState("Log Vazio");
-    const [email, onChangeEmail] = useState("trainer@fit.test");
+    const [email, onChangeEmail] = useState("student@fit.test");
     const [password, onChangePassword] = useState('Aaaaaa');
 
     const SignIn = async () => {

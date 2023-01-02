@@ -22,8 +22,11 @@ const linkStudentToTrainer = async (token, data) => {
 }
 
 const getUser = async (token) => {
-    const responseBody = (await axios.get(CONSTANTS.BACKEND_URL + '/user')
-        .set('authtoken', token)).body
+    const responseBody = (await axios.get(CONSTANTS.BACKEND_URL + '/user', {
+        headers: {
+            authToken: token
+        }
+    })).data
     if (responseBody.error) throw new Error(responseBody.error)
     return responseBody
 }
@@ -74,14 +77,6 @@ const linkScheduleToStudent = async (token, data) => {
         }
     })).data
 
-    if (responseBody.error) throw new Error(responseBody.error)
-    return responseBody
-}
-
-const changeExerciseDoneStatus = async (token, data) => {
-    const responseBody = (await axios.put(
-        CONSTANTS.BACKEND_URL + `/exercise/${data.exerciseId}/workout/${data.workoutId}/schedule/${data.scheduleId}/done`)
-        .set('authtoken', token)).body
     if (responseBody.error) throw new Error(responseBody.error)
     return responseBody
 }
@@ -137,7 +132,22 @@ const getExerciseModelsCategories = async (token) => {
     return responseBody
 }
 
+const changeExerciseDoneStatus = async (token, { workoutId, exerciseId, scheduleId, doneStatus }) => {
+    const responseBody = (await axios.put(
+        `${CONSTANTS.BACKEND_URL}/exercise/${exerciseId}/workout/${workoutId}/schedule/${scheduleId}/${doneStatus ? 'done' : 'undone'}`,
+        {},
+        {
+            headers: {
+                'authtoken': token,
+            }
+        })).data
+
+    if (responseBody.error) throw new Error(responseBody.error)
+    return responseBody
+}
+
 export const apiCall = {
+    changeExerciseDoneStatus,
     getExerciseModelsCategories,
     generateStudentTicket,
     createExerciseModelCategory,
