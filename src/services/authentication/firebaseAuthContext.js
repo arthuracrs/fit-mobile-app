@@ -1,8 +1,6 @@
 import { createContext, useState } from "react";
-import axios from "axios";
 
-// const loginServiceUrl = 'http://localhost:4001'
-const loginServiceUrl = 'http://144.22.204.203:3000'
+const loginServiceUrl = 'http://localhost:4001'
 
 export const AuthenticationContext = createContext({});
 

@@ -12,6 +12,7 @@ import RequireAuthRoutes from "./src/components/requireAuthRoutes";
 import { GeneralStateProvider } from './src/context'
 
 export default function App() {
+
   const AppRoutes = () => {
     const authContext = useContext(AuthenticationContext)
     const [isLoading, setIsLoading] = useState(true)
@@ -19,11 +20,11 @@ export default function App() {
     useEffect(() => {
       if (authContext.authenticateduser !== null) {
         console.log('onAuthStateChanged | autenticou')
-        
+
         setIsLoading(false)
       } else {
         console.log('onAuthStateChanged | falha em autenticar')
-        setLoggedUser(null)
+
         setIsLoading(false)
       }
     }, [authContext.authenticateduser])

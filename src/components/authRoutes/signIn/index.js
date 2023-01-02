@@ -5,26 +5,39 @@ import { useState, useContext } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { GeneralStateContext } from '../../../context'
+import { AuthenticationContext } from '../../../services/authentication/localAuthContext'
 
 export default function SignInScreen({ navigation }) {
     const contextData = useContext(GeneralStateContext)
+    const authContext = useContext(AuthenticationContext)
 
     const [log, setLog] = useState("Log Vazio");
     const [email, onChangeEmail] = useState("trainer@fit.test");
     const [password, onChangePassword] = useState('Aaaaaa');
 
     const SignIn = async () => {
-        const auth = contextData.firebase.auth
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+        try {
+            await authContext.SignIn({ email, password })
+        } catch (error) {
+            console.log(error)
+            const errorCode = error.code;
+            const errorMessage = error.message;
 
-                setLog({ errorCode })
-            });
+            setLog({ errorCode })
+
+        }
+
+        // const auth = contextData.firebase.auth
+        // signInWithEmailAndPassword(auth, email, password)
+        //     .then((userCredential) => {
+        //         const user = userCredential.user;
+        //     })
+        //     .catch((error) => {
+        //         const errorCode = error.code;
+        //         const errorMessage = error.message;
+
+        //         setLog({ errorCode })
+        //     });
     }
 
     return (
