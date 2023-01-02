@@ -6,17 +6,23 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { CONSTANTS } from '../../../../../consts'
 import { GeneralStateContext } from '../../../../../context'
 
+import { Auth } from '../../../../../services/authentication'
+import { apiCall } from '../../../../../services/apiCalls'
+
 export default function Exercise({ navigateToExerciseScreen, exercise, editMode }) {
+  const authContext = useContext(Auth.AuthenticationContext);
   const contextData = useContext(GeneralStateContext);
   const [isEnabled, setIsEnabled] = useState(exercise.done);
 
   const deleteExercise = async (doneStatus) => {
-    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
-      axios.delete(`${CONSTANTS.BACKEND_URL}/exercise/${exercise.exerciseId}/workout/${exercise.workoutId}`, {
-        headers: {
-          'authtoken': token,
-        }
-      }).then(res => {
+    const data = {
+      workoutId: exercise.workoutId,
+      exerciseId: exercise.exerciseId,
+      scheduleId: exercise.scheduleId
+    }
+    
+    apiCall.deleteExercise(authContext.token, data)
+      .then(res => {
         console.log(`deleteExercise | sucesso deleteando exercise`)
 
         contextData.setShouldLoadCurrentSchedule(x => !x)
@@ -24,7 +30,7 @@ export default function Exercise({ navigateToExerciseScreen, exercise, editMode 
         console.log(`deleteExercise | error deleteando exercise`)
         console.log(error);
       })
-    })
+
   }
 
   const deleteHandler = () => {

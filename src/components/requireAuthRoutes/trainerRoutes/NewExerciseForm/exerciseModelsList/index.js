@@ -6,6 +6,8 @@ import axios from 'axios';
 import { NewExerciseFormStateContext } from '../context'
 import { GeneralStateContext } from '../../../../../context'
 import { CONSTANTS } from '../../../../../consts'
+import { Auth } from '../../../../../services/authentication'
+import { apiCall } from '../../../../../services/apiCalls'
 
 import Loading from "../../../../shared/loading";
 import ExerciseModelItem from './exerciseModelItem'
@@ -13,6 +15,7 @@ import ExerciseModelItem from './exerciseModelItem'
 export default function ExerciseModelsList({ navigation, route }) {
 
     const contextData = useContext(GeneralStateContext);
+    const authContext = useContext(Auth.AuthenticationContext);
     const formContextData = useContext(NewExerciseFormStateContext);
 
     const [exerciseModels, setExerciseModels] = useState([])
@@ -28,23 +31,18 @@ export default function ExerciseModelsList({ navigation, route }) {
     }
 
     useEffect(() => {
-        contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
-            axios.get(`${CONSTANTS.BACKEND_URL}/exerciseModel`, {
-                headers: {
-                    'authtoken': token,
-                }
+        apiCall.getExerciseModelsCategories(authContext.token)
+            .then(function (response) {
+                console.log('getExerciseModels | sucesso')
+                setExerciseModels(response.exerciseModels)
+                setIsLoading(false)
             })
-                .then(function (response) {
-                    console.log('getExerciseModels | sucesso')
-                    setExerciseModels(response.data.exerciseModels)
-                    setIsLoading(false)
-                })
-                .catch(function (error) {
-                    setErrorloading(true)
-                    console.log('getExerciseModels | erro')
-                    console.log(error);
-                })
-        })
+            .catch(function (error) {
+                setErrorloading(true)
+                console.log('getExerciseModels | erro')
+                console.log(error);
+            })
+
     }, [])
 
     return (

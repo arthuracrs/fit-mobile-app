@@ -5,12 +5,15 @@ import axios from 'axios';
 import { NewExerciseFormStateContext } from '../context'
 import { GeneralStateContext } from '../../../../../context'
 import { CONSTANTS } from '../../../../../consts'
+import { Auth } from '../../../../../services/authentication'
+import { apiCall } from '../../../../../services/apiCalls'
 
 export default Home = ({ navigation, route }) => {
     const { scheduleId, workoutId } = route.params
 
     const formContextData = useContext(NewExerciseFormStateContext);
     const generalContextData = useContext(GeneralStateContext);
+    const authContext = useContext(Auth.AuthenticationContext);
 
     const exerciseModel = formContextData.exerciseModel
 
@@ -20,28 +23,17 @@ export default Home = ({ navigation, route }) => {
             scheduleId,
             workoutId
         }
-        console.log(data)
-        generalContextData.firebase.auth.currentUser.getIdToken(true).then(token => {
-            axios.post(`${CONSTANTS.BACKEND_URL}/exercise`, data, {
-                headers: {
-                    'authtoken': token,
-                }
-            })
-                .then(function (response) {
-                    console.log('NewExerciseForm | sucesso na criação de Exercise')
 
-                    generalContextData.setShouldLoadCurrentSchedule(x => !x)
-                    navigation.goBack()
+        apiCall.createExecise(authContext.token, data).then(function (response) {
+            console.log('NewExerciseForm | sucesso na criação de Exercise')
 
-                    // setIsLoading(false)
-                })
-                .catch(function (error) {
-                    // setErrorloading(true)
-                    console.log('NewExerciseForm | erro na criação de Exercise')
-                    console.log(error);
-                })
-
+            generalContextData.setShouldLoadCurrentSchedule(x => !x)
+            navigation.goBack()
         })
+            .catch(function (error) {
+                console.log('NewExerciseForm | erro na criação de Exercise')
+                console.log(error);
+            })
     }
 
     return (

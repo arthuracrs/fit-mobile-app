@@ -5,40 +5,55 @@ import { useState, useContext, useEffect } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import { GeneralStateContext } from '../../../context'
+import { Auth } from '../../../services/authentication'
 
 export default function SignupScreen({ navigation }) {
-    const contextData = useContext(GeneralStateContext);
+    const authContext = useContext(Auth.AuthenticationContext);
 
     const [log, setLog] = useState("Log Vazio");
     const [username, setUsername] = useState("Arthur");
-    const [email, onChangeEmail] = useState("Email@gmail.com");
-    const [password, onChangePassword] = useState('Ffffff');
+    const [email, onChangeEmail] = useState("trainer@fit.test");
+    const [password, onChangePassword] = useState('Aaaaaa');
     const [confirmPassword, onChangeConfirmPassword] = useState('');
 
     const submitUser = async () => {
-        const auth = contextData.firebase.auth
-        
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                updateProfile(auth.currentUser, {
-                    displayName: username,
-                }).then(() => {
-                    // Profile updated!
-                    // ...
-                }).catch((error) => {
-                    // An error occurred
-                    // ...
-                    console.log(error)
-                });
+
+        authContext.SignUp({ email, password })
+            .then(res => {
+                console.log('SignUp | sucesso')
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setLog({
-                    errorCode,
-                    errorMessage
-                })
-            });
+            .catch(error => {
+                console.log('SignUp | error')
+                const responseBody = error.response.data
+                if (responseBody.error != undefined) {
+                    const errorCode = responseBody.error;
+                    console.log('errorCode: ' + errorCode)
+                    setLog({ errorCode })
+                }
+            })
+
+        // const auth = contextData.firebase.auth
+        // createUserWithEmailAndPassword(auth, email, password)
+        //     .then((userCredential) => {
+        //         updateProfile(auth.currentUser, {
+        //             displayName: username,
+        //         }).then(() => {
+        //             // Profile updated!
+        //             // ...
+        //         }).catch((error) => {
+        //             // An error occurred
+        //             // ...
+        //             console.log(error)
+        //         });
+        //     })
+        //     .catch((error) => {
+        //         const errorCode = error.code;
+        //         const errorMessage = error.message;
+        //         setLog({
+        //             errorCode,
+        //             errorMessage
+        //         })
+        //     });
     }
 
     useEffect(() => {

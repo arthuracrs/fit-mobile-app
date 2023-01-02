@@ -5,17 +5,17 @@ import axios from 'axios';
 
 import { CONSTANTS } from '../../../consts'
 import { GeneralStateContext } from '../../../context'
+import { Auth } from '../../../services/authentication'
+import { apiCall } from '../../../services/apiCalls'
 
-export default function Workout({ item, navigateToWorkoutScreen, editMode }) {
+export default function Workout({ scheduleId, item, navigateToWorkoutScreen, editMode }) {
 
   const contextData = useContext(GeneralStateContext);
-  const deleteWorkout = async (doneStatus) => {
-    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
-      axios.delete(`${CONSTANTS.BACKEND_URL}/workout/${item.workoutId}`, {
-        headers: {
-          'authtoken': token,
-        }
-      }).then(res => {
+  const authContext = useContext(Auth.AuthenticationContext);
+
+  const deleteWorkout = async () => {
+    apiCall.deleteWorkout(authContext.token, { scheduleId, workoutId: item.workoutId })
+      .then(res => {
         console.log(`deleteWorkout | sucesso deleteando Workout`)
 
         contextData.setShouldLoadCurrentSchedule(x => !x)
@@ -23,7 +23,7 @@ export default function Workout({ item, navigateToWorkoutScreen, editMode }) {
         console.log(`deleteWorkout | error deleteando Workout`)
         console.log(error);
       })
-    })
+
   }
 
   const deleteHandler = () => {

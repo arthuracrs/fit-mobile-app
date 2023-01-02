@@ -5,10 +5,13 @@ import axios from 'axios'
 import { GeneralStateContext } from '../../../../context'
 import Loading from "../../../shared/loading";
 import { CONSTANTS } from '../../../../consts'
+import { Auth } from '../../../../services/authentication'
 import StudentItem from './studentItem'
+import { apiCall } from '../../../../services/apiCalls'
 
 export default function StudentsListScreen({ navigation }) {
   const contextData = useContext(GeneralStateContext);
+  const authContext = useContext(Auth.AuthenticationContext)
 
   const [editMode, setEditMode] = useState(false)
   const toggleSwitch = async () => setEditMode(x => !x)
@@ -24,22 +27,25 @@ export default function StudentsListScreen({ navigation }) {
   }
 
   const onShare = async () => {
-    console.log("fom fom fom ")
     try {
+      
+      const ticketId = (await apiCall.generateStudentTicket(authContext.token)).studentTicketId
+      console.log(ticketId)
+      const message = `${CONSTANTS.BACKEND_URL}/ticket/${ticketId}`
       const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
+        message
       });
-      if (result.action === Share.sharedAction) {
-        
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
+
+      // if (result.action === Share.sharedAction) {
+
+      //   if (result.activityType) {
+      //     // shared with activity type of result.activityType
+      //   } else {
+      //     // shared
+      //   }
+      // } else if (result.action === Share.dismissedAction) {
+      //   // dismissed
+      // }
     } catch (error) {
       alert(error.message);
     }
@@ -65,26 +71,24 @@ export default function StudentsListScreen({ navigation }) {
   }
 
   useEffect(() => {
-    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
-      axios.get(`${CONSTANTS.BACKEND_URL}/trainer/students`, {
-        headers: {
-          'authtoken': token,
-        }
-      })
-        .then(function (response) {
-          console.log('StudentsScreen | sucesso na busca de students')
-
-          const result = response.data
-          contextData.setTrainerStudents(result.students)
-          setIsLoading(false)
-        })
-        .catch(function (error) {
-          console.log('StudentsScreen | erro na busca de students')
-          setErrorloading(true)
-          console.log(error);
-        })
-
+    axios.get(`${CONSTANTS.BACKEND_URL}/trainer/students`, {
+      headers: {
+        'authtoken': authContext.token,
+      }
     })
+      .then(function (response) {
+        console.log('StudentsScreen | sucesso na busca de students')
+
+        const result = response.data
+        contextData.setTrainerStudents(result.students)
+        setIsLoading(false)
+      })
+      .catch(function (error) {
+        console.log('StudentsScreen | erro na busca de students')
+        setErrorloading(true)
+        console.log(error);
+      })
+
   }, [retry, contextData.shouldLoadCurrentSchedule])
 
   return (

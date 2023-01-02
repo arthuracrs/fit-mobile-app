@@ -16,38 +16,54 @@ export default function StudentProfileScreen({ navigation, route }) {
 
   const toggleSwitch = async () => setEditMode(x => !x)
 
-  return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Schedule</Text>
-          <View style={styles.switchContainer}>
-            <Text style={{ fontSize: 20, fontWeight: '500' }}>Edit mode</Text>
-            <Switch
-              trackColor={{ false: "#767577", true: "darkgray" }}
-              thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
-              onChange={toggleSwitch}
-              value={editMode}
-            />
+  return (<>
+    {
+      studentProfileData.currentSchedule !== undefined ?
+        <>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Text style={styles.title}>Schedule</Text>
+              <View style={styles.switchContainer}>
+                <Text style={{ fontSize: 20, fontWeight: '500' }}>Edit mode</Text>
+                <Switch
+                  trackColor={{ false: "#767577", true: "darkgray" }}
+                  thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
+                  onChange={toggleSwitch}
+                  value={editMode}
+                />
+              </View>
+            </View>
+            {editMode && <AddNewWorkoutButton handler={
+              () => navigation.navigate('NewWorkoutForm', {
+                scheduleId: studentProfileData.currentSchedule.scheduleId
+              })
+            } />}
+            {studentProfileData.currentSchedule.workoutsList.length !== 0 &&
+              <ScrollView>
+                {studentProfileData.currentSchedule.workoutsList.map((workout, index) =>
+                  <Workout
+                    key={index}
+                    navigateToWorkoutScreen={() => navigation.navigate('Workout', { workoutIndex: index, studentIndex })}
+                    item={workout}
+                    scheduleId={studentProfileData.currentSchedule}
+                    editMode={editMode}
+                  />
+                )}
+              </ScrollView>}
+            {studentProfileData.currentSchedule.workoutsList.length === 0 &&
+              <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <Text>This student do not have any workout</Text>
+                <Text>Click on edit to add a workout</Text>
+              </View>}
           </View>
-        </View>
-        {editMode && <AddNewWorkoutButton handler={
-          () => navigation.navigate('NewWorkoutForm', {
-            scheduleId: studentProfileData.currentSchedule.scheduleId
-          })
-        } />}
-        <ScrollView>
-          {studentProfileData.currentSchedule.workoutsList.map((workout, index) =>
-            <Workout
-              key={index}
-              navigateToWorkoutScreen={() => navigation.navigate('Workout', { workoutIndex: index, studentIndex })}
-              item={workout}
-              editMode={editMode}
-            />
-          )}
-        </ScrollView>
-      </View>
-    </>
+        </>
+        :
+        <>
+          <Text>This student do not hhave a shcedule</Text>
+          <Button title="Add Schedule" onPress={() => navigation.navigate('NewScheduleForm', { studentIndex })} />
+        </>
+    }
+  </>
   )
 }
 

@@ -7,6 +7,7 @@ import WorkoutScreen from './workoutScreen';
 import ExerciseScreen from './exerciseScreen';
 import NewWorkoutForm from './NewWorkoutForm';
 import NewExerciseForm from './NewExerciseForm';
+import NewScheduleForm from './NewScheduleForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function TrainerRoutes() {
       <Stack.Screen name="StudentProfile" component={StudentProfileScreen} />
       <Stack.Screen name="Workout" component={WorkoutScreen} />
       <Stack.Screen name="Exercise" component={ExerciseScreen} />
+      <Stack.Screen name="NewScheduleForm" component={NewScheduleForm} />
       <Stack.Screen name="NewWorkoutForm" component={NewWorkoutForm} />
       <Stack.Screen name="NewExerciseForm" component={NewExerciseForm} />
     </Stack.Navigator>

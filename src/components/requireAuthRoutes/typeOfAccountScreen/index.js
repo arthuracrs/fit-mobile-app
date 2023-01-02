@@ -7,11 +7,13 @@ import { signOut } from "firebase/auth";
 
 import { GeneralStateContext } from '../../../context'
 import { CONSTANTS } from '../../../consts'
+import { Auth } from '../../../services/authentication'
 
 export default function TypeOfAccountScreen() {
     const contextData = useContext(GeneralStateContext);
+    const authContext = useContext(Auth.AuthenticationContext);
     const auth = contextData.firebase.auth
-    
+
     const Stack = createNativeStackNavigator();
 
     const TypeOfAccount = ({ navigation }) => (
@@ -19,7 +21,7 @@ export default function TypeOfAccountScreen() {
             <Button title="Trainner" onPress={() => navigation.navigate('TrainerRegisterInfo')} />
             <Button title="Student" onPress={() => navigation.navigate('StudentRegisterInfo')} />
             <View style={styles.sigout}>
-                <Button style={styles.button} title="Logout" onPress={() => signOut(auth)} />
+                <Button style={styles.button} title="Logout" onPress={() => authContext.SignOut()} />
             </View>
         </View>
     )
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
     text: {
         textAlign: 'center'
     },
-    sigout:{
+    sigout: {
         marginTop: 50
     },
     button: {

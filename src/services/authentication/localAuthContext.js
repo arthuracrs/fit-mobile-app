@@ -10,10 +10,25 @@ export const AuthenticationProvider = (props) => {
 
     const [token, setToken] = useState(null)
     const [authenticateduser, setAuthenticateduser] = useState(null)
+    const [userCredentials, setUserCredentials] = useState({})
 
     const SignIn = async ({ email, password }) => {
-        const token = (await axios.post(`${loginServiceUrl}/login`, { email, password })).data.token
-        setToken(token)
+        try {
+            const token = (await axios.post(`${loginServiceUrl}/login`, { email, password })).data.token
+            if (token.error == undefined) {
+                setToken(token)
+                setUserCredentials({ email, password })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const GetToken = async () => {
+            const token = (await axios.post(`${loginServiceUrl}/login`, { email: userCredentials })).data.token
+            setUserCredentials({ email, password })
+
+            return token
     }
 
     const GetAuthUser = async () => {
@@ -25,16 +40,25 @@ export const AuthenticationProvider = (props) => {
         setAuthenticateduser(user)
     }
 
+    const SignUp = async ({ email, password }) => {
+        const responseBody = (await axios.post(`${loginServiceUrl}/register`, { email, password })).data
+
+        return responseBody
+    }
+
     const SignOut = () => {
-        setAuthenticateduser(null)
+        console.log('SignOut')
+        setToken(null)
     }
 
     const contextData = {
         SignIn,
+        SignUp,
         token,
         GetAuthUser,
         SignOut,
-        authenticateduser
+        authenticateduser,
+        GetToken,
     }
 
     return (

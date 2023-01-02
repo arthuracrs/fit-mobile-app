@@ -54,7 +54,7 @@ export default function WorkoutScreen({ navigation, route }) {
             <Exercice
               navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex, studentIndex })}
               key={index}
-              exercise={{ workoutId: workout.workoutId, ...item }}
+              exercise={{ workoutId: workout.workoutId, ...item, scheduleId }}
               editMode={editMode}
             />
           )}

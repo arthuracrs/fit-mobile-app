@@ -4,10 +4,13 @@ import axios from 'axios';
 
 import { GeneralStateContext } from '../../../../context'
 import { CONSTANTS } from '../../../../consts'
+import { Auth } from '../../../../services/authentication'
+import { apiCall } from '../../../../services/apiCalls'
 
 export default function NewWorkoutForm({ navigation, route }) {
   const { scheduleId } = route.params
   const contextData = useContext(GeneralStateContext);
+  const authContext = useContext(Auth.AuthenticationContext);
   const [name, setName] = useState(false)
 
   const styles = StyleSheet.create({
@@ -35,29 +38,18 @@ export default function NewWorkoutForm({ navigation, route }) {
       name,
       scheduleId
     }
+    apiCall.createWorkout(authContext.token, data)
+      .then(function (response) {
+        console.log('NewWorkoutForm | sucesso na criação de Workout')
 
-    contextData.firebase.auth.currentUser.getIdToken(true).then(token => {
-      axios.post(`${CONSTANTS.BACKEND_URL}/workout`, data, {
-        headers: {
-          'authtoken': token,
-        }
+        contextData.setShouldLoadCurrentSchedule(x => !x)
+        navigation.goBack()
       })
-        .then(function (response) {
-          console.log('NewWorkoutForm | sucesso na criação de Workout')
-
-          contextData.setShouldLoadCurrentSchedule(x => !x)
-          navigation.goBack()
-          // const user = response.data
-          // contextData.setUserData(user)
-          // setIsLoading(false)
-        })
-        .catch(function (error) {
-          // setErrorloading(true)
-          console.log('NewWorkoutForm | erro na criação de Workout')
-          console.log(error);
-        })
-
-    })
+      .catch(function (error) {
+        // setErrorloading(true)
+        console.log('NewWorkoutForm | erro na criação de Workout')
+        console.log(error);
+      })
   }
 
   return (
