@@ -146,7 +146,18 @@ const changeExerciseDoneStatus = async (token, { workoutId, exerciseId, schedule
     return responseBody
 }
 
+const getTrainerStudents = async (token) => {
+    const responseBody = (await axios.get(`${CONSTANTS.BACKEND_URL}/trainer/students`, {
+        headers: {
+            'authtoken': token,
+        }
+    })).data
+    if (responseBody.error) throw new Error(responseBody.error)
+    return responseBody
+}
+
 export const apiCall = {
+    getTrainerStudents,
     changeExerciseDoneStatus,
     getExerciseModelsCategories,
     generateStudentTicket,

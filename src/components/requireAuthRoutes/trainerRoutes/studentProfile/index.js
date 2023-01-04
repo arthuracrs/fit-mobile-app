@@ -5,16 +5,16 @@ import { useTranslation } from "react-i18next";
 import { GeneralStateContext } from '../../../../context'
 import Workout from '../../../shared/workout';
 import AddNewScheduleButton from './addNewScheduleButton'
+import AddNewWorkoutButton from './addNewWorkoutButton'
 
 export default function StudentProfileScreen({ navigation, route }) {
   const [editMode, setEditMode] = useState(false)
-  const [showNewWorkoutForm, setShowNewWorkoutForm] = useState(false)
   const { t } = useTranslation();
   const { studentIndex } = route.params
 
   const contextData = useContext(GeneralStateContext);
   const studentProfileData = contextData.trainerStudents[studentIndex]
-
+  
   const toggleSwitch = async () => setEditMode(x => !x)
 
   return (<>
@@ -23,7 +23,7 @@ export default function StudentProfileScreen({ navigation, route }) {
         <>
           <View style={styles.container}>
             <View style={styles.header}>
-              <Text style={styles.title}>{t("TrainerStudentProfileScreen.schedules")}</Text>
+              <Text style={styles.title}>{t("TrainerStudentProfileScreen.schedule")}</Text>
               <View style={styles.switchContainer}>
                 <Text style={{ fontSize: 20, fontWeight: '500' }}>{t("TrainerStudentProfileScreen.editMode")}</Text>
                 <Switch
@@ -34,11 +34,16 @@ export default function StudentProfileScreen({ navigation, route }) {
                 />
               </View>
             </View>
-            {editMode && <AddNewScheduleButton handler={
-              () => navigation.navigate('NewScheduleForm', {
+            {editMode && <AddNewWorkoutButton handler={
+              () => navigation.navigate('NewWorkoutForm', {
                 scheduleId: studentProfileData.currentSchedule.scheduleId
               })
             } />}
+            {/* {editMode && <AddNewScheduleButton handler={
+              () => navigation.navigate('NewScheduleForm', {
+                studentIndex
+              })
+            } />} */}
             {studentProfileData.currentSchedule.workoutsList.length !== 0 &&
               <ScrollView>
                 {studentProfileData.currentSchedule.workoutsList.map((workout, index) =>
@@ -53,14 +58,14 @@ export default function StudentProfileScreen({ navigation, route }) {
               </ScrollView>}
             {studentProfileData.currentSchedule.workoutsList.length === 0 &&
               <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text>This student do not have any workout</Text>
-                <Text>Click on edit to add a workout</Text>
+                <Text>{t("TrainerStudentProfileScreen.studentNoWorkout")}</Text>
+                <Text>{t("TrainerStudentProfileScreen.clickEditAddWorkout")}</Text>
               </View>}
           </View>
         </>
         :
         <>
-          <Text>This student do not hhave a shcedule</Text>
+          <Text>{t("TrainerStudentProfileScreen.studentNoSchedule")}</Text>
           <Button title="Add Schedule" onPress={() => navigation.navigate('NewScheduleForm', { studentIndex })} />
         </>
     }

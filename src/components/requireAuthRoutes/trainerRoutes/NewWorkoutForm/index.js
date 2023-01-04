@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { useState, useContext } from "react";
-import axios from 'axios';
+import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
 import { CONSTANTS } from '../../../../consts'
@@ -12,6 +12,7 @@ export default function NewWorkoutForm({ navigation, route }) {
   const contextData = useContext(GeneralStateContext);
   const authContext = useContext(Auth.AuthenticationContext);
   const [name, setName] = useState(false)
+  const { t } = useTranslation();
 
   const styles = StyleSheet.create({
     container: {
@@ -38,6 +39,7 @@ export default function NewWorkoutForm({ navigation, route }) {
       name,
       scheduleId
     }
+    
     apiCall.createWorkout(authContext.token, data)
       .then(function (response) {
         console.log('NewWorkoutForm | sucesso na criação de Workout')
@@ -54,14 +56,14 @@ export default function NewWorkoutForm({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Name:</Text>
+      <Text style={styles.title}>{t("TrainerNewWorkoutFormScreen.name")}:</Text>
       <TextInput
         style={styles.input}
         onChangeText={x => setName(x)}
         value={name}
-        placeholder="Workout Name"
+        placeholder={t("TrainerNewWorkoutFormScreen.namePlaceholder")}
       />
-      <Button style={styles.button} title="Add Workout" onPress={submit} />
+      <Button style={styles.button} title={t("TrainerNewWorkoutFormScreen.addWorkout")} onPress={submit} />
     </View>
   )
 }

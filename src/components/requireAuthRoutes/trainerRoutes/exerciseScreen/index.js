@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { useState, useEffect, useContext } from "react";
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { useTranslation } from "react-i18next";
 
 import Circle from './circle'
 import { GeneralStateContext } from '../../../../context'
@@ -8,7 +9,7 @@ import { GeneralStateContext } from '../../../../context'
 export default function ExerciseScreen({ navigation, route }) {
   const contextData = useContext(GeneralStateContext);
   const { exerciseIndex, workoutIndex, studentIndex } = route.params
-
+  const { t } = useTranslation();
   const exercise = contextData.trainerStudents[studentIndex].currentSchedule.workoutsList[workoutIndex].exercisesList[exerciseIndex]
   
   function DoneSign({ done }) {
@@ -27,8 +28,8 @@ export default function ExerciseScreen({ navigation, route }) {
     return (
       <View>
         {done ?
-          <Text style={styles.doneText}> Done - <Ionicons name="checkmark-circle" size={24} color="green" /></Text >
-          : <Text style={styles.doneText}>Pendent</Text>
+          <Text style={styles.doneText}> {t("TrainerExerciseScreen.done")} - <Ionicons name="checkmark-circle" size={24} color="green" /></Text >
+          : <Text style={styles.doneText}>{t("TrainerExerciseScreen.pendent")}</Text>
         }
       </View >)
   }
@@ -45,16 +46,16 @@ export default function ExerciseScreen({ navigation, route }) {
         )
       })}
       <View>
-        <Text style={styles.title}>{exercise.name}</Text>
+        <Text style={styles.title}>{exercise.exerciseModelId.name}</Text>
         <DoneSign done={exercise.done} />
       </View>
       <View style={styles.circles}>
-        <Circle number={exercise.repetitions} text='Repetitions' />
-        <Circle number={exercise.series} text='Series' />
+        <Circle number={exercise.repetitions} text={t("TrainerExerciseScreen.repetitions")} />
+        <Circle number={exercise.series} text={t("TrainerExerciseScreen.series")} />
       </View>
       <View style={styles.interval}>
         <MaterialCommunityIcons name="clock" size={40} color="black" />
-        <Text style={styles.intervalText}> Interval {exercise.interval} Seconds</Text>
+        <Text style={styles.intervalText}> {t("TrainerExerciseScreen.interval")} {exercise.interval} {t("TrainerExerciseScreen.seconds")}</Text>
       </View>
     </View>
   );
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     padding: 20
   },
   title: {
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: '700'
   },
   image: {

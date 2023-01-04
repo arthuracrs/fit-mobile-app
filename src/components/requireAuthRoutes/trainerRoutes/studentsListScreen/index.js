@@ -31,7 +31,7 @@ export default function StudentsListScreen({ navigation }) {
   const onShare = async () => {
     try {
       const ticketId = (await apiCall.generateStudentTicket(authContext.token)).studentTicketId
-      
+
       const message = `${CONSTANTS.BACKEND_URL}/ticket/${ticketId}`
       await Share.share({
         message
@@ -42,16 +42,12 @@ export default function StudentsListScreen({ navigation }) {
   };
 
   useEffect(() => {
-    axios.get(`${CONSTANTS.BACKEND_URL}/trainer/students`, {
-      headers: {
-        'authtoken': authContext.token,
-      }
-    })
-      .then(function (response) {
+    apiCall.getTrainerStudents(authContext.token)
+      .then(function (data) {
+        
         console.log('StudentsScreen | sucesso na busca de students')
-
-        const result = response.data
-        contextData.setTrainerStudents(result.students)
+        console.log(data)
+        contextData.setTrainerStudents(data.students)
         setIsLoading(false)
       })
       .catch(function (error) {

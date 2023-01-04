@@ -14,7 +14,7 @@ export default function NewScheduleForm({ navigation, route }) {
   const authContext = useContext(Auth.AuthenticationContext);
 
   const studentProfileData = contextData.trainerStudents[studentIndex]
-
+  
   const [name, setName] = useState(false)
 
   const styles = StyleSheet.create({
@@ -47,11 +47,11 @@ export default function NewScheduleForm({ navigation, route }) {
       }
       await apiCall.linkScheduleToStudent(authContext.token, linkScheduleToStudentData)
 
-      console.log('NewScheduleForm | sucesso na criação de Workout')
+      console.log('NewScheduleForm | sucesso na criação de Schedule')
       contextData.setShouldLoadCurrentSchedule(x => !x)
       navigation.goBack()
     } catch (error) {
-      console.log('NewScheduleForm | erro na criação de Workout')
+      console.log('NewScheduleForm | erro na criação de Schedule')
       console.log(error);
     }
   }

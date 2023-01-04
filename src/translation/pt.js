@@ -56,29 +56,56 @@ export default {
         },
         TrainerWorkoutScreen: {
             title: "Treino",
+            progress: "Progresso",
+            editMode: 'Edição',
+            noExercises: "Esse treino não possui exercícios",
+            clickEditToAddExercises: "Ative Edição para adicionar Exercícios"
         },
         TrainerStudentProfileScreen: {
             title: "Perfil do Aluno",
             schedules: "Cronogramas",
+            schedule: "Cronograma",
             editMode: "Edição",
+            studentNoSchedule: "Esse aluno não tem nenhum Cronograma",
+            studentNoWorkout: "Esse aluno não tem nenhum Treino",
+            clickEditAddWorkout: "Ative Edição para adicionar um treino"
         },
-        AddNewScheduleButton:{
+        AddNewScheduleButton: {
             title: "Novo Cronograma"
+        },
+        AddNewWorkoutButton: {
+            title: "Novo Treino"
+        },
+        AddNewExerciseButton:{
+            title: "Novo Exercício"
         },
         TrainerExerciseScreen: {
             title: "Exercício",
+            repetitions: "Repetições",
+            interval: "intervalo",
+            series: "Séries",
+            seconds: "segundos",
+            pendent: "Pendente",
+            done: "Pago"
         },
         TrainerNewScheduleFormScreen: {
             title: "Formulario de Cronograma",
             name: "Nome",
-            namePlaceholder: "Nome do Novo Cronograma",
+            namePlaceholder: "Digite aqui o nome do Cronograma",
             addSchedule: "Criar Cronograma"
         },
         TrainerNewWorkoutFormScreen: {
             title: "Formulario de Cronograma",
+            name: "Nome",
+            namePlaceholder: "Digite aqui o nome do Treino",
+            addWorkout: "Criar Treino"
         },
         TrainerNewExerciseFormScreen: {
-            title: "Formulario de Cronograma",
+            title: "Formulario de Exercício",
+            addNewExercise: "Adicionar Exercício",
+            selectModel: "Selecionar Modelo",
+            exerciseModel: "Modelo de Exercício",
+            empty: "Nenhum modelo selecionado"
         },
     },
 }

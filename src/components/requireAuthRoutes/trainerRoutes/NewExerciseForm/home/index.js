@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, Button, FlatList, TouchableOpacity } from 'react-native';
 import { useState, useContext, useEffect } from "react";
-import axios from 'axios';
+import { useTranslation } from "react-i18next";
 
 import { NewExerciseFormStateContext } from '../context'
 import { GeneralStateContext } from '../../../../../context'
@@ -10,6 +10,7 @@ import { apiCall } from '../../../../../services/apiCalls'
 
 export default Home = ({ navigation, route }) => {
     const { scheduleId, workoutId } = route.params
+    const { t } = useTranslation();
 
     const formContextData = useContext(NewExerciseFormStateContext);
     const generalContextData = useContext(GeneralStateContext);
@@ -39,18 +40,18 @@ export default Home = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.title}>Exercise Model: </Text>
-                <Text style={styles.name}>{exerciseModel?.name ? exerciseModel.name : 'empty'}</Text>
+                <Text style={styles.title}>{t("TrainerNewExerciseFormScreen.exerciseModel")}: </Text>
+                <Text style={styles.name}>{exerciseModel?.name ? exerciseModel.name : t("TrainerNewExerciseFormScreen.empty") }</Text>
                 <Button
                     style={styles.button}
-                    title="Select Model"
+                    title={t("TrainerNewExerciseFormScreen.selectModel")}
                     onPress={() => navigation.navigate('ExerciseModelsList')}
                 />
             </View>
             <Button
                 disabled={exerciseModel?.name ? false : true}
                 style={styles.submit}
-                title="Add New Exercise"
+                title={t("TrainerNewExerciseFormScreen.addNewExercise")}
                 onPress={submit}
             />
         </View >
