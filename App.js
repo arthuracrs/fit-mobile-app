@@ -2,9 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { Auth } from "./src/services/authentication"
-
 import { AppRoutes } from './src/components/appRoutes'
 import { GeneralStateProvider } from './src/context'
+
+import './src/translation/i18n'
 
 export default function App() {
 

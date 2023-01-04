@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Share, ScrollView, Alert, ActivityIndicator, Switch, Button } from 'react-native';
 import { useState, useEffect, useContext } from "react";
 import axios from 'axios'
+import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
 import Loading from "../../../shared/loading";
@@ -12,6 +13,7 @@ import { apiCall } from '../../../../services/apiCalls'
 export default function StudentsListScreen({ navigation }) {
   const contextData = useContext(GeneralStateContext);
   const authContext = useContext(Auth.AuthenticationContext)
+  const { t } = useTranslation();
 
   const [editMode, setEditMode] = useState(false)
   const toggleSwitch = async () => setEditMode(x => !x)
@@ -28,47 +30,16 @@ export default function StudentsListScreen({ navigation }) {
 
   const onShare = async () => {
     try {
-      
       const ticketId = (await apiCall.generateStudentTicket(authContext.token)).studentTicketId
-      console.log(ticketId)
+      
       const message = `${CONSTANTS.BACKEND_URL}/ticket/${ticketId}`
-      const result = await Share.share({
+      await Share.share({
         message
       });
-
-      // if (result.action === Share.sharedAction) {
-
-      //   if (result.activityType) {
-      //     // shared with activity type of result.activityType
-      //   } else {
-      //     // shared
-      //   }
-      // } else if (result.action === Share.dismissedAction) {
-      //   // dismissed
-      // }
     } catch (error) {
       alert(error.message);
     }
   };
-
-  const getTicketLink = () => {
-    Alert.alert(
-      //title
-      'Confirmation',
-      //body
-      'Do you really want to genereate a invite link?',
-      [
-        { text: 'Yes', onPress: onShare },
-        {
-          text: 'No',
-          onPress: () => console.log('No Pressed'),
-          style: 'cancel',
-        },
-      ],
-      { cancelable: false }
-      //clicking out side of alert will not cancel
-    );
-  }
 
   useEffect(() => {
     axios.get(`${CONSTANTS.BACKEND_URL}/trainer/students`, {
@@ -96,9 +67,9 @@ export default function StudentsListScreen({ navigation }) {
       {isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> :
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.title}>Schedule</Text>
+            <Text style={styles.title}>{t("TrainerStudentsListScreen.students")}</Text>
             <View style={styles.switchContainer}>
-              <Text style={{ fontSize: 20, fontWeight: '500' }}>Edit mode</Text>
+              <Text style={{ fontSize: 20, fontWeight: '500' }}>{t("TrainerStudentsListScreen.editMode")}</Text>
               <Switch
                 trackColor={{ false: "#767577", true: "darkgray" }}
                 thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
@@ -109,8 +80,8 @@ export default function StudentsListScreen({ navigation }) {
           </View>
           {editMode &&
             <Button
-              title="Get Ticket Link"
-              onPress={getTicketLink}
+              title={t("TrainerStudentsListScreen.getTicketLink")}
+              onPress={onShare}
             />}
           {contextData.trainerStudents.length !== 0 &&
             <ScrollView>
@@ -120,8 +91,8 @@ export default function StudentsListScreen({ navigation }) {
             </ScrollView>}
           {contextData.trainerStudents.length === 0 &&
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-              <Text>You do not have any students</Text>
-              <Text>Share a ticket link to your students</Text>
+              <Text>{t("TrainerStudentsListScreen.noStudentsText")}</Text>
+              <Text>{t("TrainerStudentsListScreen.shareTicketToStudent")}</Text>
             </View>}
         </View>
       }

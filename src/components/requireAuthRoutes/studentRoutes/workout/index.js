@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import ExerciseItem from './exerciseItem'
 import { GeneralStateContext } from '../../../../context'
 
 export default function WorkoutScreen({ navigation, route }) {
+  const { t } = useTranslation();
   const { workoutIndex } = route.params
   const contextData = useContext(GeneralStateContext);
 
@@ -25,7 +27,7 @@ export default function WorkoutScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{workout.name}</Text>
-      <Text style={styles.progress}>Progress {doneExercises}/{totalExercises}</Text>
+      <Text style={styles.progress}>{t("StudentWorkoutScreen.progress")} {doneExercises}/{totalExercises}</Text>
       <ScrollView>
         {workout.exercisesList.map((item, index) =>
           <ExerciseItem

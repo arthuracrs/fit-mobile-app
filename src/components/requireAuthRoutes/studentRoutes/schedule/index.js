@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
 import Workout from '../../../shared/workout';
@@ -8,6 +9,7 @@ import { CONSTANTS } from '../../../../consts'
 
 export default function ScheduleScreen({ navigation }) {
   const contextData = useContext(GeneralStateContext);
+  const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(true)
   const [retry, setRetry] = useState(true)
@@ -44,7 +46,7 @@ export default function ScheduleScreen({ navigation }) {
     <>
       {/* {isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> : */}
         <View style={styles.container}>
-          <Text style={styles.title}>Schedule</Text>
+          <Text style={styles.title}>{contextData.userData.student.currentSchedule.name}</Text>
           <ScrollView>
             {contextData.userData.student.currentSchedule.workoutsList.map((workout, index) =>
               <Workout key={index} navigateToWorkoutScreen={() => navigation.navigate('Workout', { workoutIndex: index })} item={workout} />

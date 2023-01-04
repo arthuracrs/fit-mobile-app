@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View, ScrollView, ActivityIndicator, Switch, TextInput, Button } from 'react-native';
 import { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
 import Workout from '../../../shared/workout';
-import AddNewWorkoutButton from './addNewWorkoutButton'
+import AddNewScheduleButton from './addNewScheduleButton'
 
 export default function StudentProfileScreen({ navigation, route }) {
   const [editMode, setEditMode] = useState(false)
   const [showNewWorkoutForm, setShowNewWorkoutForm] = useState(false)
-
+  const { t } = useTranslation();
   const { studentIndex } = route.params
 
   const contextData = useContext(GeneralStateContext);
@@ -22,9 +23,9 @@ export default function StudentProfileScreen({ navigation, route }) {
         <>
           <View style={styles.container}>
             <View style={styles.header}>
-              <Text style={styles.title}>Schedule</Text>
+              <Text style={styles.title}>{t("TrainerStudentProfileScreen.schedules")}</Text>
               <View style={styles.switchContainer}>
-                <Text style={{ fontSize: 20, fontWeight: '500' }}>Edit mode</Text>
+                <Text style={{ fontSize: 20, fontWeight: '500' }}>{t("TrainerStudentProfileScreen.editMode")}</Text>
                 <Switch
                   trackColor={{ false: "#767577", true: "darkgray" }}
                   thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
@@ -33,8 +34,8 @@ export default function StudentProfileScreen({ navigation, route }) {
                 />
               </View>
             </View>
-            {editMode && <AddNewWorkoutButton handler={
-              () => navigation.navigate('NewWorkoutForm', {
+            {editMode && <AddNewScheduleButton handler={
+              () => navigation.navigate('NewScheduleForm', {
                 scheduleId: studentProfileData.currentSchedule.scheduleId
               })
             } />}
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    fontSize: 40,
+    fontSize: 35,
     fontWeight: '700',
   },
   progress: {

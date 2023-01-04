@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Switch, TouchableOpacity } from 'react-native';
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-export default function AddNewWorkoutButton({ handler }) {
-
+export default function AddNewScheduleButton({ handler }) {
+  const { t } = useTranslation();
   const styles = StyleSheet.create({
     container: {
       borderRadius: 20,
@@ -17,7 +18,7 @@ export default function AddNewWorkoutButton({ handler }) {
       alignItems: 'center'
     },
     text: {
-      fontSize: 22,
+      fontSize: 20,
       color: 'black',
       fontWeight: '700',
     }
@@ -26,7 +27,7 @@ export default function AddNewWorkoutButton({ handler }) {
   return (
     <TouchableOpacity onPress={handler} >
       <View style={styles.container}>
-        <Text style={styles.text}>+ Add new workout</Text>
+        <Text style={styles.text}>+ {t("AddNewScheduleButton.title")}</Text>
       </View>
     </TouchableOpacity>
   );

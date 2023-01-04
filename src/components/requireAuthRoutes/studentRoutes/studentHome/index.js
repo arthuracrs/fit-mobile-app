@@ -1,18 +1,21 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useContext, useEffect } from "react";
-import { signOut } from "firebase/auth";
+import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
+import { Auth } from '../../../../services/authentication'
 
 export default function StudentHomeScreen({ navigation }) {
+    const { t } = useTranslation();
     const contextData = useContext(GeneralStateContext);
+    const authContext = useContext(Auth.AuthenticationContext);
 
     return (
         <View style={styles.container}>
-            <Text>Welcome {contextData.userData.type}</Text>
+            <Text>{t("StudentHomeScreen.welcome")} {t("StudentHomeScreen.student")}</Text>
             <View style={styles.button} >
-                <Button style={styles.button} title="Go to Schedule" onPress={() => navigation.navigate('Schedule')} />
-                <Button style={styles.button} title="Logout" onPress={() => signOut(auth)} />
+                <Button style={styles.button} title={t("StudentHomeScreen.goToScheduleButton")} onPress={() => navigation.navigate('Schedule')} />
+                <Button style={styles.button} title={t("StudentHomeScreen.logoutButton")} onPress={() => authContext.SignOut()} />
             </View>
         </View>
     );

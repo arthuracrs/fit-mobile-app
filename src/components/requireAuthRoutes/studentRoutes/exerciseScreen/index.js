@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { useState, useEffect, useContext } from "react";
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import { useTranslation } from "react-i18next";
 
 import Circle from './circle'
 import { GeneralStateContext } from '../../../../context'
 
 export default function ExerciseScreen({ navigation, route }) {
+  const { t } = useTranslation();
   const contextData = useContext(GeneralStateContext);
   const { exerciseIndex, workoutIndex } = route.params
 
@@ -27,8 +29,8 @@ export default function ExerciseScreen({ navigation, route }) {
     return (
       <View>
         {done ?
-          <Text style={styles.doneText}> Done - <Ionicons name="checkmark-circle" size={24} color="green" /></Text >
-          : <Text style={styles.doneText}>Pendent</Text>
+          <Text style={styles.doneText}>{t("StudentExerciseScreen.done")} - <Ionicons name="checkmark-circle" size={24} color="green" /></Text >
+          : <Text style={styles.doneText}>{t("StudentExerciseScreen.pendent")}</Text>
         }
       </View >)
   }
@@ -45,16 +47,16 @@ export default function ExerciseScreen({ navigation, route }) {
         )
       })}
       <View>
-        <Text style={styles.title}>{exercise.name}</Text>
+        <Text style={styles.title}>{exercise.exerciseModelId.name}</Text>
         <DoneSign done={exercise.done} />
       </View>
       <View style={styles.circles}>
-        <Circle number={exercise.repetitions} text='Repetitions' />
-        <Circle number={exercise.series} text='Series' />
+        <Circle number={exercise.repetitions} text={t("StudentExerciseScreen.repetitions")} />
+        <Circle number={exercise.series} text={t("StudentExerciseScreen.series")} />
       </View>
       <View style={styles.interval}>
         <MaterialCommunityIcons name="clock" size={40} color="black" />
-        <Text style={styles.intervalText}> Interval {exercise.interval} Seconds</Text>
+        <Text style={styles.intervalText}>  {t("StudentExerciseScreen.interval")}: {exercise.interval} {t("StudentExerciseScreen.seconds")}</Text>
       </View>
     </View>
   );

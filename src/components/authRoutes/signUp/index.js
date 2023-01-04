@@ -1,14 +1,14 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, View, Text, Button } from "react-native";
 import { useState, useContext, useEffect } from "react";
-
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useTranslation } from 'react-i18next'
 
 import { GeneralStateContext } from '../../../context'
 import { Auth } from '../../../services/authentication'
 
 export default function SignupScreen({ navigation }) {
     const authContext = useContext(Auth.AuthenticationContext);
+    const { t } = useTranslation()
 
     const [log, setLog] = useState("Log Vazio");
     const [username, setUsername] = useState("Arthur");
@@ -76,19 +76,19 @@ export default function SignupScreen({ navigation }) {
                     style={styles.input}
                     onChangeText={setUsername}
                     value={username}
-                    placeholder="Email"
+                    placeholder={t("SignUpScreen.usernamePlaceholder")}
                 />
                 <TextInput
                     style={styles.input}
                     onChangeText={onChangeEmail}
                     value={email}
-                    placeholder="Email"
+                    placeholder={t("SignUpScreen.emailPlaceholder")}
                 />
                 <TextInput
                     style={styles.input}
                     onChangeText={onChangePassword}
                     value={password}
-                    placeholder="Senha"
+                    placeholder={t("SignUpScreen.passwordPlaceholder")}
                     secureTextEntry={true}
                     keyboardType="default"
                 />
@@ -96,12 +96,12 @@ export default function SignupScreen({ navigation }) {
                     style={styles.input}
                     onChangeText={onChangeConfirmPassword}
                     value={confirmPassword}
-                    placeholder="Repita a Senha"
+                    placeholder={t("SignUpScreen.repeatPasswordPlaceholder")}
                     secureTextEntry={true}
                     keyboardType="default"
                 />
             </SafeAreaView>
-            <Button title="Sign Up" onPress={submitUser} />
+            <Button title={t("SignUpScreen.signUpButton")} onPress={submitUser} />
             <Text>{log.errorCode}</Text>
         </View>
     );

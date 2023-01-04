@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { useState, useContext } from "react";
-import axios from 'axios';
+import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
 import { CONSTANTS } from '../../../../consts'
@@ -9,6 +9,7 @@ import { apiCall } from '../../../../services/apiCalls'
 
 export default function NewScheduleForm({ navigation, route }) {
   const { studentIndex } = route.params
+  const { t } = useTranslation();
   const contextData = useContext(GeneralStateContext);
   const authContext = useContext(Auth.AuthenticationContext);
 
@@ -53,41 +54,18 @@ export default function NewScheduleForm({ navigation, route }) {
       console.log('NewScheduleForm | erro na criação de Workout')
       console.log(error);
     }
-
-
-    // axios.post(`${CONSTANTS.BACKEND_URL}/schedule`, data, {
-    //   headers: {
-    //     'authtoken': token,
-    //   }
-    // })
-    //   .then(function (response) {
-    //     console.log('NewScheduleForm | sucesso na criação de Workout')
-
-    //     contextData.setShouldLoadCurrentSchedule(x => !x)
-    //     navigation.goBack()
-    //     // const user = response.data
-    //     // contextData.setUserData(user)
-    //     // setIsLoading(false)
-    //   })
-    //   .catch(function (error) {
-    //     // setErrorloading(true)
-    //     console.log('NewScheduleForm | erro na criação de Workout')
-    //     console.log(error);
-    //   })
-
-
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Name: </Text>
+      <Text style={styles.title}>{t("TrainerNewScheduleFormScreen.name")}: </Text>
       <TextInput
         style={styles.input}
         onChangeText={x => setName(x)}
         value={name}
-        placeholder="Schedule Name"
+        placeholder={t("TrainerNewScheduleFormScreen.namePlaceholder")}
       />
-      <Button style={styles.button} title="Add Schedule" onPress={submit} />
+      <Button style={styles.button} title={t("TrainerNewScheduleFormScreen.addSchedule")} onPress={submit} />
     </View>
   )
 }
