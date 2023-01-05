@@ -19,11 +19,11 @@ export default function StudentItem({ item, navigateToStudentScreen }) {
       fontWeight: '700'
     }
   });
-
+  
   return (
     <TouchableOpacity onPress={navigateToStudentScreen} >
       <View style={styles.container}>
-        <Text style={styles.text}>{item.userId}</Text>
+        <Text style={styles.text}>{item.userId.hasOwnProperty('username') ? item.userId.username : item.userId.userId}</Text>
       </View>
     </TouchableOpacity>
   );

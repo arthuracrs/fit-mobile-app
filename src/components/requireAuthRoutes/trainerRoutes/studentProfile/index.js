@@ -14,7 +14,7 @@ export default function StudentProfileScreen({ navigation, route }) {
 
   const contextData = useContext(GeneralStateContext);
   const studentProfileData = contextData.trainerStudents[studentIndex]
-  
+
   const toggleSwitch = async () => setEditMode(x => !x)
 
   return (<>
@@ -34,6 +34,14 @@ export default function StudentProfileScreen({ navigation, route }) {
                 />
               </View>
             </View>
+            <Text style={{
+              fontSize: 20,
+              textAlign: 'left',
+              borderTopWidth: 1,
+              borderColor: 'gray',
+              paddingTop: 10,
+              marginTop: 10
+            }}>Treinos</Text>
             {editMode && <AddNewWorkoutButton handler={
               () => navigation.navigate('NewWorkoutForm', {
                 scheduleId: studentProfileData.currentSchedule.scheduleId

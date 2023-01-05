@@ -17,7 +17,6 @@ export default function SignupScreen({ navigation }) {
     const [confirmPassword, onChangeConfirmPassword] = useState('');
 
     const submitUser = async () => {
-
         authContext.SignUp({ email, password })
             .then(res => {
                 console.log('SignUp | sucesso')
@@ -31,29 +30,6 @@ export default function SignupScreen({ navigation }) {
                     setLog({ errorCode })
                 }
             })
-
-        // const auth = contextData.firebase.auth
-        // createUserWithEmailAndPassword(auth, email, password)
-        //     .then((userCredential) => {
-        //         updateProfile(auth.currentUser, {
-        //             displayName: username,
-        //         }).then(() => {
-        //             // Profile updated!
-        //             // ...
-        //         }).catch((error) => {
-        //             // An error occurred
-        //             // ...
-        //             console.log(error)
-        //         });
-        //     })
-        //     .catch((error) => {
-        //         const errorCode = error.code;
-        //         const errorMessage = error.message;
-        //         setLog({
-        //             errorCode,
-        //             errorMessage
-        //         })
-        //     });
     }
 
     useEffect(() => {

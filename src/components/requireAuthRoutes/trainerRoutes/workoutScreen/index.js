@@ -49,6 +49,14 @@ export default function WorkoutScreen({ navigation, route }) {
             />
           </View>
         </View>
+        <Text style={{
+          fontSize: 20,
+          textAlign: 'left',
+          borderTopWidth: 1,
+          borderColor: 'gray',
+          paddingTop: 10,
+          marginTop: 10
+        }}>Exercícios</Text>
         {editMode && <AddNewExerciseButton handler={
           () => navigation.navigate('NewExerciseForm', { scheduleId, workoutId: workout.workoutId })} />}
         {workout.exercisesList.length !== 0 &&

@@ -156,7 +156,18 @@ const getTrainerStudents = async (token) => {
     return responseBody
 }
 
+const updateUser = async (token, data) => {
+    const responseBody = (await axios.put(`${CONSTANTS.BACKEND_URL}/user`, data, {
+        headers: {
+            'authtoken': token,
+        }
+    })).data
+    if (responseBody.error) throw new Error(responseBody.error)
+    return responseBody
+}
+
 export const apiCall = {
+    updateUser,
     getTrainerStudents,
     changeExerciseDoneStatus,
     getExerciseModelsCategories,

@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Share, ScrollView, Alert, ActivityIndicator, Switch, Button } from 'react-native';
 import { useState, useEffect, useContext } from "react";
-import axios from 'axios'
 import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
@@ -44,9 +43,7 @@ export default function StudentsListScreen({ navigation }) {
   useEffect(() => {
     apiCall.getTrainerStudents(authContext.token)
       .then(function (data) {
-        
         console.log('StudentsScreen | sucesso na busca de students')
-        console.log(data)
         contextData.setTrainerStudents(data.students)
         setIsLoading(false)
       })

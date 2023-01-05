@@ -18,17 +18,14 @@ export const AppRoutes = () => {
             console.log('AppRoutes | autenticou')
             apiCall.getUser(authContext.token)
                 .then(user => {
-                    
-                    contextData.setUserData(user)
                     setIsLoading(false)
+                    contextData.setUserData(user)
                 })
                 .catch(error => {
                     console.log(error)
                 })
-
         } else {
             console.log('AppRoutes | falha em autenticar')
-
             setIsLoading(false)
         }
     }, [authContext.token, contextData.shouldLoadCurrentSchedule])
