@@ -45,6 +45,7 @@ export default function ScheduleScreen({ navigation }) {
   return (
     <>
       {/* {isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> : */}
+      {contextData.userData.student?.currentSchedule != undefined ?
         <View style={styles.container}>
           <Text style={styles.title}>{contextData.userData.student.currentSchedule.name}</Text>
           <ScrollView>
@@ -53,6 +54,7 @@ export default function ScheduleScreen({ navigation }) {
             )}
           </ScrollView>
         </View>
+        : <Text>Sem schedule</Text>}
       
     </>
   )

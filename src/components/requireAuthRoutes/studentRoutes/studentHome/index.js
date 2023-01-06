@@ -9,11 +9,12 @@ export default function StudentHomeScreen({ navigation }) {
     const { t } = useTranslation();
     const contextData = useContext(GeneralStateContext);
     const authContext = useContext(Auth.AuthenticationContext);
-
+    // contextData.shouldLoadUser
     return (
         <View style={styles.container}>
             <Text>{t("StudentHomeScreen.welcome")} {t("StudentHomeScreen.student")}</Text>
             <View style={styles.button} >
+                <Button style={styles.button} title={'refresh'} onPress={() => contextData.setShouldLoadUser(x => !x)} />
                 <Button style={styles.button} title={t("StudentHomeScreen.goToScheduleButton")} onPress={() => navigation.navigate('Schedule')} />
                 <Button style={styles.button} title={t("StudentHomeScreen.logoutButton")} onPress={() => authContext.SignOut()} />
             </View>

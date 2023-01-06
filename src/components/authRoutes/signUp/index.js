@@ -11,7 +11,6 @@ export default function SignupScreen({ navigation }) {
     const { t } = useTranslation()
 
     const [log, setLog] = useState("Log Vazio");
-    const [username, setUsername] = useState("Arthur");
     const [email, onChangeEmail] = useState("trainer@fit.test");
     const [password, onChangePassword] = useState('Aaaaaa');
     const [confirmPassword, onChangeConfirmPassword] = useState('');
@@ -48,12 +47,6 @@ export default function SignupScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <SafeAreaView>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={setUsername}
-                    value={username}
-                    placeholder={t("SignUpScreen.usernamePlaceholder")}
-                />
                 <TextInput
                     style={styles.input}
                     onChangeText={onChangeEmail}

@@ -41,8 +41,9 @@ export default function NewScheduleForm({ navigation, route }) {
     const newScheduleData = { name }
     try {
       const scheduleId = (await apiCall.createSchedule(authContext.token, newScheduleData)).scheduleId
+      console.log(studentProfileData)
       const linkScheduleToStudentData = {
-        studentId: studentProfileData.userId,
+        studentId: studentProfileData.userId.userId,
         scheduleId
       }
       await apiCall.linkScheduleToStudent(authContext.token, linkScheduleToStudentData)
