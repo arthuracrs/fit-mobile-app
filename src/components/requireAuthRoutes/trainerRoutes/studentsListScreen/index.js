@@ -31,7 +31,7 @@ export default function StudentsListScreen({ navigation }) {
     try {
       const ticketId = (await apiCall.generateStudentTicket(authContext.token)).studentTicketId
 
-      const message = `${CONSTANTS.BACKEND_URL}/ticket/${ticketId}`
+      const message = `${CONSTANTS.FRONTEND_URL}/?ticket=${ticketId}`
       await Share.share({
         message
       });
