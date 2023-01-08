@@ -1,8 +1,10 @@
 import { createContext, useState } from "react";
 import axios from "axios";
+import { CONSTANTS } from '../../consts'
 
-// const loginServiceUrl = 'http://localhost:4001'
-const loginServiceUrl = 'http://144.22.204.203:3000'
+const loginServiceUrl = CONSTANTS.AUTHSERVICE_URL
+// const loginServiceUrl = 'http://144.22.204.203:3000'
+// const loginServiceUrl = 'http://meuloru.com:3001'
 
 export const AuthenticationContext = createContext({});
 
@@ -25,10 +27,10 @@ export const AuthenticationProvider = (props) => {
     }
 
     const GetToken = async () => {
-            const token = (await axios.post(`${loginServiceUrl}/login`, { email: userCredentials })).data.token
-            setUserCredentials({ email, password })
+        const token = (await axios.post(`${loginServiceUrl}/login`, { email: userCredentials })).data.token
+        setUserCredentials({ email, password })
 
-            return token
+        return token
     }
 
     const GetAuthUser = async () => {
