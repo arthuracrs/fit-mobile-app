@@ -105,7 +105,11 @@ export default {
             addNewExercise: "Adicionar Exercício",
             selectModel: "Selecionar Modelo",
             exerciseModel: "Modelo de Exercício",
-            empty: "Nenhum modelo selecionado"
+            empty: "Nenhum modelo selecionado",
+            description: "Descrição",
+            interval: 'Intervalo',
+            repetitions: "Repetições",
+            series: 'Séries'
         },
     },
 }

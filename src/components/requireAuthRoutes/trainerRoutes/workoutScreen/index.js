@@ -40,7 +40,7 @@ export default function WorkoutScreen({ navigation, route }) {
         }}>
           <Text style={styles.progress}>{t("TrainerWorkoutScreen.progress")} {doneExercises}/{totalExercices}</Text>
           <View style={styles.switchContainer}>
-            <Text style={{ fontSize: 20, fontWeight: '500' }}>{t("TrainerWorkoutScreen.editMode")}</Text>
+            <Text style={{ fontSize: 18, fontWeight: '500' }}>{t("TrainerWorkoutScreen.editMode")}</Text>
             <Switch
               trackColor={{ false: "#767577", true: "darkgray" }}
               thumbColor={editMode ? "lightgreen" : "#f4f3f4"}

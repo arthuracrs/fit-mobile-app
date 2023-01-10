@@ -45,7 +45,7 @@ export default Home = ({ navigation, route }) => {
                     <Text style={{
                         marginBottom: 10,
                         fontSize: 18,
-                    }}>description:</Text>
+                    }}>{t("TrainerNewExerciseFormScreen.description")}:</Text>
                     <TextInput
                         style={{
                             borderWidth: 2,
@@ -69,7 +69,7 @@ export default Home = ({ navigation, route }) => {
         series: () => {
             return (
                 <View key={'series'} style={styles.inputNumber.container}>
-                    <Text style={styles.inputNumber.title}>series:</Text>
+                    <Text style={styles.inputNumber.title}>{t("TrainerNewExerciseFormScreen.series")}:</Text>
                     <TextInput
                         style={styles.inputNumber.input}
                         onChangeText={text => {
@@ -85,7 +85,7 @@ export default Home = ({ navigation, route }) => {
         repetitions: () => {
             return (
                 <View key={'repetitions'} style={styles.inputNumber.container}>
-                    <Text style={styles.inputNumber.title}>repetitions:</Text>
+                    <Text style={styles.inputNumber.title}>{t("TrainerNewExerciseFormScreen.repetitions")}:</Text>
                     <TextInput
                         style={styles.inputNumber.input}
                         onChangeText={text => {
@@ -101,7 +101,7 @@ export default Home = ({ navigation, route }) => {
         interval: () => {
             return (
                 <View key={'interval'} style={styles.inputNumber.container}>
-                    <Text style={styles.inputNumber.title}>interval:</Text>
+                    <Text style={styles.inputNumber.title}>{t("TrainerNewExerciseFormScreen.interval")}:</Text>
                     <TextInput
                         style={styles.inputNumber.input}
                         onChangeText={text => {

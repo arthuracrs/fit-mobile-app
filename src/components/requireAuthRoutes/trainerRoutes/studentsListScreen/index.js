@@ -2,12 +2,16 @@ import { StyleSheet, Text, View, Share, ScrollView, Alert, ActivityIndicator, Sw
 import { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
-import { GeneralStateContext } from '../../../../context'
+
 import Loading from "../../../shared/loading";
+import RefreshTrainerStudents from "../../../shared/refreshTrainerStudents";
+
 import { CONSTANTS } from '../../../../consts'
+import { GeneralStateContext } from '../../../../context'
 import { Auth } from '../../../../services/authentication'
-import StudentItem from './studentItem'
 import { apiCall } from '../../../../services/apiCalls'
+
+import StudentItem from './studentItem'
 
 export default function StudentsListScreen({ navigation }) {
   const contextData = useContext(GeneralStateContext);
@@ -58,37 +62,38 @@ export default function StudentsListScreen({ navigation }) {
   return (
     <>
       {isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> :
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{t("TrainerStudentsListScreen.students")}</Text>
-            <View style={styles.switchContainer}>
-              <Text style={{ fontSize: 20, fontWeight: '500' }}>{t("TrainerStudentsListScreen.editMode")}</Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "darkgray" }}
-                thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
-                onChange={toggleSwitch}
-                value={editMode}
-              />
+        <RefreshTrainerStudents>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Text style={styles.title}>{t("TrainerStudentsListScreen.students")}</Text>
+              <View style={styles.switchContainer}>
+                <Text style={{ fontSize: 20, fontWeight: '500' }}>{t("TrainerStudentsListScreen.editMode")}</Text>
+                <Switch
+                  trackColor={{ false: "#767577", true: "darkgray" }}
+                  thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
+                  onChange={toggleSwitch}
+                  value={editMode}
+                />
+              </View>
             </View>
+            {editMode &&
+              <Button
+                title={t("TrainerStudentsListScreen.getTicketLink")}
+                onPress={onShare}
+              />}
+            {contextData.trainerStudents.length !== 0 &&
+              <ScrollView>
+                {contextData.trainerStudents.map((student, index) => {
+                  return student.userId.username && <StudentItem key={index} item={student} navigateToStudentScreen={() => navigation.navigate('StudentProfile', { studentIndex: index })} />
+                })}
+              </ScrollView>}
+            {contextData.trainerStudents.length === 0 &&
+              <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <Text>{t("TrainerStudentsListScreen.noStudentsText")}</Text>
+                <Text>{t("TrainerStudentsListScreen.shareTicketToStudent")}</Text>
+              </View>}
           </View>
-          {editMode &&
-            <Button
-              title={t("TrainerStudentsListScreen.getTicketLink")}
-              onPress={onShare}
-            />}
-          {contextData.trainerStudents.length !== 0 &&
-            <ScrollView>
-              {contextData.trainerStudents.map((student, index) => {
-                return student.userId.username && <StudentItem key={index} item={student} navigateToStudentScreen={() => navigation.navigate('StudentProfile', { studentIndex: index })} />
-              })}
-            </ScrollView>}
-          {contextData.trainerStudents.length === 0 &&
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-              <Text>{t("TrainerStudentsListScreen.noStudentsText")}</Text>
-              <Text>{t("TrainerStudentsListScreen.shareTicketToStudent")}</Text>
-            </View>}
-        </View>
-      }
+        </RefreshTrainerStudents>}
     </>
   )
 }
