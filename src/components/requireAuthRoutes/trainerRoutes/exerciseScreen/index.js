@@ -11,7 +11,7 @@ export default function ExerciseScreen({ navigation, route }) {
   const { exerciseIndex, workoutIndex, studentIndex } = route.params
   const { t } = useTranslation();
   const exercise = contextData.trainerStudents[studentIndex].currentSchedule.workoutsList[workoutIndex].exercisesList[exerciseIndex]
-  
+
   function DoneSign({ done }) {
     const styles = StyleSheet.create({
       container: {
@@ -35,37 +35,54 @@ export default function ExerciseScreen({ navigation, route }) {
   }
 
   return (
-    <View style={styles.container}>
-      {exercise.exerciseModelId.media.map((image, index) => {
-        return (
-          <Image
-            key={index}
-            style={styles.image}
-            source={{ uri: image.url }}
-          />
-        )
-      })}
-      <View>
-        <Text style={styles.title}>{exercise.exerciseModelId.name}</Text>
-        <DoneSign done={exercise.done} />
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        {exercise.exerciseModelId.media.map((image, index) => {
+          return (
+            <Image
+              key={index}
+              style={styles.image}
+              source={{ uri: image.url }}
+            />
+          )
+        })}
+        <View>
+          <Text style={styles.title}>{exercise.exerciseModelId.name}</Text>
+          <DoneSign done={exercise.done} />
+        </View>
+        <View style={styles.circles}>
+          <Circle number={exercise.repetitions} text={t("TrainerExerciseScreen.repetitions")} />
+          <Circle number={exercise.series} text={t("TrainerExerciseScreen.series")} />
+        </View>
+        <View style={styles.interval}>
+          <MaterialCommunityIcons name="clock" size={40} color="black" />
+          <Text style={styles.intervalText}> {t("TrainerExerciseScreen.interval")} {exercise.interval} {t("TrainerExerciseScreen.seconds")}</Text>
+        </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description}> Descrição:</Text>
+          <Text style={styles.description}> {exercise.description}</Text>
+        </View>
       </View>
-      <View style={styles.circles}>
-        <Circle number={exercise.repetitions} text={t("TrainerExerciseScreen.repetitions")} />
-        <Circle number={exercise.series} text={t("TrainerExerciseScreen.series")} />
-      </View>
-      <View style={styles.interval}>
-        <MaterialCommunityIcons name="clock" size={40} color="black" />
-        <Text style={styles.intervalText}> {t("TrainerExerciseScreen.interval")} {exercise.interval} {t("TrainerExerciseScreen.seconds")}</Text>
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
   container: {
     flex: 1,
-    backgroundColor: 'white',
     padding: 20
+  },
+  descriptionContainer: {
+    textAlign: 'left',
+    paddingTop: 20
+  },
+  description: {
+    textAlign: 'left',
+    fontSize: 20,
   },
   title: {
     fontSize: 30,

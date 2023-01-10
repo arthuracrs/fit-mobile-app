@@ -5,8 +5,11 @@ export const NewExerciseFormStateContext = createContext({});
 export const NewExerciseFormStateProvider = (props) => {
 
     const [exerciseModel, setExerciseModel] = useState({})
+    const [exercise, setExercise] = useState({})
 
     const contextData = {
+        exercise,
+        setExercise,
         exerciseModel,
         setExerciseModel
     }
