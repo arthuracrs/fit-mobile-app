@@ -123,7 +123,7 @@ const generateStudentTicket = async (token) => {
     return responseBody
 }
 const getExerciseModelsCategories = async (token) => {
-    const responseBody = (await axios.get(`${CONSTANTS.BACKEND_URL}/exerciseModel`, {
+    const responseBody = (await axios.get(`${CONSTANTS.BACKEND_URL}/exerciseModelCategories`, {
         headers: {
             authtoken: token
         }

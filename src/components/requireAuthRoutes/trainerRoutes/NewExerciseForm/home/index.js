@@ -45,7 +45,7 @@ export default Home = ({ navigation, route }) => {
                 <Button
                     style={styles.button}
                     title={t("TrainerNewExerciseFormScreen.selectModel")}
-                    onPress={() => navigation.navigate('ExerciseModelsList')}
+                    onPress={() => navigation.navigate('ExerciseModelsCategoriesList')}
                 />
             </View>
             <Button

@@ -10,15 +10,15 @@ import { Auth } from '../../../../../services/authentication'
 import { apiCall } from '../../../../../services/apiCalls'
 
 import Loading from "../../../../shared/loading";
-import ExerciseModelItem from './exerciseModelCategoryItem'
+import ExerciseModelCategoryItem from './exerciseModelCategoryItem'
 
-export default function exerciseModelsCategoriesList({ navigation, route }) {
+export default function ExerciseModelsCategoriesList({ navigation, route }) {
 
     const contextData = useContext(GeneralStateContext);
     const authContext = useContext(Auth.AuthenticationContext);
     const formContextData = useContext(NewExerciseFormStateContext);
 
-    const [exerciseModels, setExerciseModels] = useState([])
+    const [exerciseModelsCategoriesList, setExerciseModelsCategoriesList] = useState([])
 
     const [isLoading, setIsLoading] = useState(true)
     const [retry, setRetry] = useState(true)
@@ -33,13 +33,13 @@ export default function exerciseModelsCategoriesList({ navigation, route }) {
     useEffect(() => {
         apiCall.getExerciseModelsCategories(authContext.token)
             .then(function (response) {
-                console.log('getExerciseModels | sucesso')
-                setExerciseModels(response.exerciseModels)
+                console.log('getExerciseModelsCategories | sucesso')
+                setExerciseModelsCategoriesList(response.exerciseModelCategories)
                 setIsLoading(false)
             })
             .catch(function (error) {
                 setErrorloading(true)
-                console.log('getExerciseModels | erro')
+                console.log('getExerciseModelsCategories | erro')
                 console.log(error);
             })
 
@@ -52,10 +52,16 @@ export default function exerciseModelsCategoriesList({ navigation, route }) {
                 :
                 <View style={styles.container}>
                     <FlatList
-                        data={exerciseModels}
-                        renderItem={({ item }) => <ExerciseModelItem goBack={() => navigation.goBack()} item={item} />}
+                        data={exerciseModelsCategoriesList}
+                        renderItem={
+                            ({ item }) => <ExerciseModelCategoryItem
+                                goToCategory={
+                                    () => navigation.navigate('ExerciseModelsCategory',
+                                        { exerciseModels: item.exerciseModelsList })}
+                                item={item}
+                            />}
                         numColumns={2}
-                        keyExtractor={item => item.exerciseModelId}
+                        keyExtractor={item => item.exerciseModelCategoryId}
                     />
                 </View>}
         </>

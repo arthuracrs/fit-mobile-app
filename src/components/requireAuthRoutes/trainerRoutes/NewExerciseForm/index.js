@@ -5,7 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { NewExerciseFormStateProvider, NewExerciseFormStateContext } from './context'
 
+import ExerciseModelsCategoriesList from './exerciseModelsCategoriesList'
 import ExerciseModelsList from './exerciseModelsList'
+import ExerciseModelsCategory from './exerciseModelsCategory'
 import Home from './home'
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +24,16 @@ export default function NewExerciseForm({ navigation, route }) {
           component={Home}
           options={{ headerShown: false }}
           initialParams={{ scheduleId, workoutId }}
+        />
+        <Stack.Screen
+          name="ExerciseModelsCategoriesList"
+          component={ExerciseModelsCategoriesList}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ExerciseModelsCategory"
+          component={ExerciseModelsCategory}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="ExerciseModelsList"

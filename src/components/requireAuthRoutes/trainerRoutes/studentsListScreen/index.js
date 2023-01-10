@@ -78,9 +78,9 @@ export default function StudentsListScreen({ navigation }) {
             />}
           {contextData.trainerStudents.length !== 0 &&
             <ScrollView>
-              {contextData.trainerStudents.map((student, index) =>
-                <StudentItem key={index} item={student} navigateToStudentScreen={() => navigation.navigate('StudentProfile', { studentIndex: index })} />
-              )}
+              {contextData.trainerStudents.map((student, index) => {
+                return student.userId.username && <StudentItem key={index} item={student} navigateToStudentScreen={() => navigation.navigate('StudentProfile', { studentIndex: index })} />
+              })}
             </ScrollView>}
           {contextData.trainerStudents.length === 0 &&
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
