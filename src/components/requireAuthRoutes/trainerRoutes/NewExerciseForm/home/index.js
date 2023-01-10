@@ -44,7 +44,7 @@ export default Home = ({ navigation, route }) => {
                 <View key={'description'} style={styles.input}>
                     <Text style={{
                         marginBottom: 10,
-                        fontSize: 18
+                        fontSize: 18,
                     }}>description:</Text>
                     <TextInput
                         style={{
@@ -68,21 +68,10 @@ export default Home = ({ navigation, route }) => {
         },
         series: () => {
             return (
-                <View key={'series'} style={styles.input}>
-                    <Text style={{
-                        marginBottom: 10,
-                        fontSize: 18
-                    }}>series:</Text>
+                <View key={'series'} style={styles.inputNumber.container}>
+                    <Text style={styles.inputNumber.title}>series:</Text>
                     <TextInput
-
-                        style={{
-                            borderWidth: 2,
-                            borderColor: 'gray',
-                            padding: 15,
-                            borderRadius: 10,
-                            backgroundColor: 'white',
-                            marginHorizontal: 10
-                        }}
+                        style={styles.inputNumber.input}
                         onChangeText={text => {
                             formContextData.setExercise(x => ({ ...x, series: text }))
                         }}
@@ -95,20 +84,10 @@ export default Home = ({ navigation, route }) => {
         },
         repetitions: () => {
             return (
-                <View key={'repetitions'} style={styles.input}>
-                    <Text style={{
-                        marginBottom: 10,
-                        fontSize: 18
-                    }}>repetitions:</Text>
+                <View key={'repetitions'} style={styles.inputNumber.container}>
+                    <Text style={styles.inputNumber.title}>repetitions:</Text>
                     <TextInput
-                        style={{
-                            borderWidth: 2,
-                            borderColor: 'gray',
-                            padding: 15,
-                            borderRadius: 10,
-                            backgroundColor: 'white',
-                            marginHorizontal: 10
-                        }}
+                        style={styles.inputNumber.input}
                         onChangeText={text => {
                             formContextData.setExercise(x => ({ ...x, repetitions: text }))
                         }}
@@ -121,20 +100,10 @@ export default Home = ({ navigation, route }) => {
         },
         interval: () => {
             return (
-                <View key={'interval'} style={styles.input}>
-                    <Text style={{
-                        marginBottom: 10,
-                        fontSize: 18
-                    }}>interval:</Text>
+                <View key={'interval'} style={styles.inputNumber.container}>
+                    <Text style={styles.inputNumber.title}>interval:</Text>
                     <TextInput
-                        style={{
-                            borderWidth: 2,
-                            borderColor: 'gray',
-                            padding: 15,
-                            borderRadius: 10,
-                            backgroundColor: 'white',
-                            marginHorizontal: 10
-                        }}
+                        style={styles.inputNumber.input}
                         onChangeText={text => {
                             formContextData.setExercise(x => ({ ...x, interval: text }))
                         }}
@@ -188,6 +157,45 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomWidth: 1,
         borderColor: 'gray',
+    },
+    inputNumberContainer: {
+        paddingVertical: 20,
+        paddingHorizontal: 10,
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderColor: 'gray',
+        flexDirection: 'row',
+        title: {
+            marginBottom: 10,
+            fontSize: 18,
+            flex: 3,
+        }
+    },
+    inputNumber: {
+        container: {
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            justifyContent: 'center',
+            borderBottomWidth: 1,
+            borderColor: 'gray',
+            flexDirection: 'row',
+        },
+        title: {
+            marginBottom: 10,
+            fontSize: 18,
+            flex: 3,
+        },
+        input: {
+            fontSize: 20,
+            textAlign: 'center',
+            borderWidth: 2,
+            borderColor: 'gray',
+            padding: 10,
+            borderRadius: 10,
+            backgroundColor: 'white',
+            marginHorizontal: 10,
+            flex: 1,
+        }
     },
     button: {
         borderWidth: 2,
