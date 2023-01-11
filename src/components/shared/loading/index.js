@@ -17,6 +17,7 @@ export default function Loading({ error, handleRetry }) {
         },
         image: {
             height: win.height * .2,
+            maxHeight: 100,
             resizeMode: 'center',
         },
     });

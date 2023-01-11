@@ -26,7 +26,8 @@ export default function StudentHomeScreen({ navigation }) {
             borderRadius: 20,
             margin: 20,
             marginBottom: -50,
-            maxWidth: win.width * .8,
+            width: win.width * .8,
+            maxWidth: 600,
             height: win.height * .2,
             maxHeight: 250,
             alignSelf: 'center'
@@ -34,7 +35,8 @@ export default function StudentHomeScreen({ navigation }) {
         image: {
             resizeMode: "cover",
             height: '100%',
-            width: win.width * .8
+            width: win.width * .8,
+            maxWidth: 600,
         },
         mainContainer: {
             padding: 20,
