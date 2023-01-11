@@ -17,51 +17,29 @@ export default function StudentHomeScreen({ navigation }) {
         container: {
             paddingTop: 50,
             flex: 1,
-            // backgroundColor: 'white',
-            backgroundColor: 'rgba(0, 0, 0, 0.01)',
-            justifyContent: 'flex-start',
-            flexDirection: 'column',
-            alignItems: 'center'
+            // backgroundColor: 'red',
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
         },
         bannerContainer: {
-            flexDirection: 'column',
-            justifyContent: 'center',
+            zIndex: 1,
             overflow: 'hidden',
             borderRadius: 20,
-            
-            shadowOffset: {
-                width: 0,
-                height: 10,
-            },
-            shadowOpacity: 0.6,
-            shadowRadius: 15,
-            elevation: 15,
+            backgroundColor: 'gold',
+            margin: 20,
+            marginBottom: -90,
         },
-        button: {
-            marginVertical: 20
+        image: {
+            resizeMode: "cover",
+            height: 200,
+            width: '100%'
         },
         mainContainer: {
             padding: 20,
-            marginVertical: 20,
-            // backgroundColor: 'rgba(0, 0, 0, 0.01)',
+            borderTopEndRadius: 20,
+            borderTopStartRadius: 20,
+            paddingTop: 120,
+            flex: 1,
             backgroundColor: 'white',
-            flex: 1,
-            justifyContent: 'space-between',
-
-            shadowOffset: {
-                width: 0,
-                height: 0,
-            },
-            shadowOpacity: 1,
-            shadowRadius: 15,
-            elevation: 5,
-        },
-        image: {
-            flex: 1,
-            resizeMode: "cover",
-            width: win.width * 0.9,
-            maxWidth: 500,
-            maxHeight: 200,
         },
     });
 
@@ -74,10 +52,10 @@ export default function StudentHomeScreen({ navigation }) {
                         uri: 'https://img.freepik.com/free-photo/portrait-concentrated-young-afro-american-sportsman_171337-9464.jpg?w=2000          '
                     }} />
             </View>
-            <Text>{t("StudentHomeScreen.welcome")} {t("StudentHomeScreen.student")}</Text>
             <View style={styles.mainContainer}>
-                <Button style={styles.button} title={t("StudentHomeScreen.goToScheduleButton")} onPress={() => navigation.navigate('Schedule')} />
-                <Button style={styles.button} title={t("StudentHomeScreen.logoutButton")} onPress={() => authContext.SignOut()} />
+                <Text style={{ textAlign: 'center' }}>{t("StudentHomeScreen.welcome")} {t("StudentHomeScreen.student")}</Text>
+                <Button title={t("StudentHomeScreen.goToScheduleButton")} onPress={() => navigation.navigate('Schedule')} />
+                <Button title={t("StudentHomeScreen.logoutButton")} onPress={() => authContext.SignOut()} />
             </View>
         </View>
     );

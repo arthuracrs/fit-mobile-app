@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import axios from 'axios'
 
 import MissingFieldsForm from './MissingFieldsForm'
 import TrainerRoutes from './trainerRoutes'
