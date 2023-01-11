@@ -14,11 +14,12 @@ export default function Loading({ error, handleRetry }) {
             fontWeight: '700',
             fontSize: 18,
             color: 'black',
+            marginTop: 30,
         },
         image: {
             height: win.height * .2,
-            maxHeight: 100,
-            resizeMode: 'center',
+            maxHeight: 80,
+            resizeMode: 'contain',
         },
     });
 
