@@ -34,7 +34,7 @@ export default function StudentProfileScreen({ navigation, route }) {
                 />
               </View>
             </View>
-            <Button title="Avaliação" onPress={() => navigation.navigate('AssessmentScreen', { studentIndex })} />
+            {/* <Button title="Avaliação" onPress={() => navigation.navigate('AssessmentScreen', { studentIndex })} /> */}
             <Text style={{
               fontSize: 20,
               textAlign: 'left',
@@ -47,12 +47,7 @@ export default function StudentProfileScreen({ navigation, route }) {
               () => navigation.navigate('NewWorkoutForm', {
                 scheduleId: studentProfileData.currentSchedule.scheduleId
               })
-            } />}
-            {/* {editMode && <AddNewScheduleButton handler={
-              () => navigation.navigate('NewScheduleForm', {
-                studentIndex
-              })
-            } />} */}
+            } />}            
             {studentProfileData.currentSchedule.workoutsList.length !== 0 &&
               <ScrollView>
                 {studentProfileData.currentSchedule.workoutsList.map((workout, index) =>

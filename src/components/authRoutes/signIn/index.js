@@ -12,8 +12,8 @@ export default function SignInScreen({ navigation }) {
     const authContext = useContext(AuthenticationContext)
 
     const [errorMessage, setErrorMessage] = useState("");
-    const [email, onChangeEmail] = useState("trainer@fit.test");
-    const [password, onChangePassword] = useState('Aaaaaa');
+    const [email, onChangeEmail] = useState("a@g.com");
+    const [password, onChangePassword] = useState('1');
 
     const SignIn = async () => {
         try {

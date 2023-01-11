@@ -117,10 +117,12 @@ export default {
             weight: {
                 title: "Peso",
                 description: " (em Kg)",
+                unit: 'Kg'
             },
             height: {
                 title: "Altura",
                 description: " (em cm)",
+                unit: "cm"
             },
         }
     },

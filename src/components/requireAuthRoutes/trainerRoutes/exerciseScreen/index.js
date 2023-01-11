@@ -46,21 +46,23 @@ export default function ExerciseScreen({ navigation, route }) {
             />
           )
         })}
-        <View>
-          <Text style={styles.title}>{exercise.exerciseModelId.name}</Text>
-          <DoneSign done={exercise.done} />
-        </View>
-        <View style={styles.circles}>
-          <Circle number={exercise.repetitions} text={t("TrainerExerciseScreen.repetitions")} />
-          <Circle number={exercise.series} text={t("TrainerExerciseScreen.series")} />
-        </View>
-        <View style={styles.interval}>
-          <MaterialCommunityIcons name="clock" size={40} color="black" />
-          <Text style={styles.intervalText}> {t("TrainerExerciseScreen.interval")} {exercise.interval} {t("TrainerExerciseScreen.seconds")}</Text>
-        </View>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.description}> Descrição:</Text>
-          <Text style={styles.description}> {exercise.description}</Text>
+        <View style={styles.infoContainer}>
+          <View>
+            <Text style={styles.title}>{exercise.exerciseModelId.name}</Text>
+            <DoneSign done={exercise.done} />
+          </View>
+          <View style={styles.circles}>
+            <Circle number={exercise.repetitions} text={t("TrainerExerciseScreen.repetitions")} />
+            <Circle number={exercise.series} text={t("TrainerExerciseScreen.series")} />
+          </View>
+          <View style={styles.interval}>
+            <MaterialCommunityIcons name="clock" size={40} color="black" />
+            <Text style={styles.intervalText}> {t("TrainerExerciseScreen.interval")} {exercise.interval} {t("TrainerExerciseScreen.seconds")}</Text>
+          </View>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.description}> Descrição:</Text>
+            <Text style={styles.description}> {exercise.description}</Text>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -74,11 +76,14 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  infoContainer: {
     padding: 20
   },
   descriptionContainer: {
     textAlign: 'left',
-    paddingTop: 20
+    paddingTop: 20,
+    paddingBottom: 150
   },
   description: {
     textAlign: 'left',
