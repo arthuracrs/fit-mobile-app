@@ -36,7 +36,7 @@ export default function ExerciseScreen({ navigation, route }) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{backgroundColor: 'red'}}>
       <View style={styles.container}>
         {exercise.exerciseModelId.media.map((image, index) => {
           return (

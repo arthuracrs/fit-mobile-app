@@ -24,7 +24,6 @@ export default function StudentHomeScreen({ navigation }) {
             zIndex: 1,
             overflow: 'hidden',
             borderRadius: 20,
-            backgroundColor: 'gold',
             margin: 20,
             marginBottom: -90,
             maxWidth: win.width * .8,

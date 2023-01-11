@@ -1,5 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+
+const navTheme = DefaultTheme;
+navTheme.colors.background = 'white';
 
 import { Auth } from "./src/services/authentication"
 import { AppRoutes } from './src/components/appRoutes'
@@ -10,7 +13,7 @@ import './src/translation/i18n'
 export default function App() {
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navTheme}>
       <StatusBar style="auto" />
       <Auth.AuthenticationProvider>
         <GeneralStateProvider>
