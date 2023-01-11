@@ -25,7 +25,7 @@ export default function StudentHomeScreen({ navigation }) {
             overflow: 'hidden',
             borderRadius: 20,
             margin: 20,
-            marginBottom: -90,
+            marginBottom: -50,
             maxWidth: win.width * .8,
             height: win.height * .2,
             maxHeight: 250,
