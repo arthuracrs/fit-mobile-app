@@ -23,6 +23,8 @@ export const AuthenticationProvider = (props) => {
             }
         } catch (error) {
             console.log(error)
+            return { error: error.response.data.error }
+
         }
     }
 

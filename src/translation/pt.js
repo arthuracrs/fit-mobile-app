@@ -25,6 +25,7 @@ export default {
         },
         "StudentScheduleScreen": {
             title: "Cronograma",
+            noSchedule: "Sem Cronograma"
         },
         "StudentWorkoutScreen": {
             title: "Treino",
@@ -76,7 +77,7 @@ export default {
         AddNewWorkoutButton: {
             title: "Novo Treino"
         },
-        AddNewExerciseButton:{
+        AddNewExerciseButton: {
             title: "Novo Exercício"
         },
         TrainerExerciseScreen: {
@@ -111,5 +112,16 @@ export default {
             repetitions: "Repetições",
             series: 'Séries'
         },
+        TrainerAssessmentScreen: {
+            title: "Avaliação Física",
+            weight: {
+                title: "Peso",
+                description: " (em Kg)",
+            },
+            height: {
+                title: "Altura",
+                description: " (em cm)",
+            },
+        }
     },
 }

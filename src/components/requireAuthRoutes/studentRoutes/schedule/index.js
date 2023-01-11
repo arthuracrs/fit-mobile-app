@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { GeneralStateContext } from '../../../../context'
 import Workout from '../../../shared/workout';
+import RefreshStudentData from "../../../shared/refreshTrainerStudents copy";
 import Loading from "../../../shared/loading";
 import { CONSTANTS } from '../../../../consts'
 
@@ -31,7 +32,7 @@ export default function ScheduleScreen({ navigation }) {
   //       .then(response => response.json())
   //       .then((responseJson) => {
   //         console.log('ScheduleScreen | sucesso na busca de usuario no DB')
-          
+
   //         contextData.setCurrentSchedule(responseJson)
   //         setIsLoading(false)
   //       })
@@ -45,17 +46,24 @@ export default function ScheduleScreen({ navigation }) {
   return (
     <>
       {/* {isLoading ? <Loading handleRetry={handleRetry} error={errorloading} /> : */}
-      {contextData.userData.student?.currentSchedule != undefined ?
-        <View style={styles.container}>
-          <Text style={styles.title}>{contextData.userData.student.currentSchedule.name}</Text>
-          <ScrollView>
-            {contextData.userData.student.currentSchedule.workoutsList.map((workout, index) =>
-              <Workout key={index} navigateToWorkoutScreen={() => navigation.navigate('Workout', { workoutIndex: index })} item={workout} />
-            )}
-          </ScrollView>
-        </View>
-        : <Text>Sem schedule</Text>}
-      
+      <RefreshStudentData>
+        {contextData.userData.student?.currentSchedule != undefined ?
+          <View style={styles.container}>
+            <Text style={styles.title}>{contextData.userData.student.currentSchedule.name}</Text>
+            <ScrollView>
+              {contextData.userData.student.currentSchedule.workoutsList.map((workout, index) =>
+                <Workout key={index} navigateToWorkoutScreen={() => navigation.navigate('Workout', { workoutIndex: index })} item={workout} />
+              )}
+            </ScrollView>
+          </View>
+          :
+          <View style={{
+            flex: 1,
+            justifyContent: 'center',
+          }}>
+            <Text style={{textAlign: 'center'}}>{t("StudentScheduleScreen.noSchedule")}</Text>
+          </View>}
+      </RefreshStudentData>
     </>
   )
 }

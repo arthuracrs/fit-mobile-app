@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import ExerciseItem from './exerciseItem'
 import { GeneralStateContext } from '../../../../context'
+import RefreshStudentData from "../../../shared/refreshTrainerStudents copy";
 
 export default function WorkoutScreen({ navigation, route }) {
   const { t } = useTranslation();
@@ -25,24 +26,26 @@ export default function WorkoutScreen({ navigation, route }) {
   const totalExercises = workout.exercisesList.length
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{workout.name}</Text>
-      <Text style={styles.progress}>{t("StudentWorkoutScreen.progress")} {doneExercises}/{totalExercises}</Text>
-      <ScrollView>
-        {workout.exercisesList.map((item, index) =>
-          <ExerciseItem
-            navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex })}
-            key={index}
-            exercise={{
-              ...item.exerciseModelId,
-              workoutId: workout.workoutId,
-              scheduleId: contextData.userData.student.currentSchedule.scheduleId,
-              ...item
-            }}
-          />
-        )}
-      </ScrollView>
-    </View>
+    <RefreshStudentData>
+      <View style={styles.container}>
+        <Text style={styles.title}>{workout.name}</Text>
+        <Text style={styles.progress}>{t("StudentWorkoutScreen.progress")} {doneExercises}/{totalExercises}</Text>
+        <ScrollView>
+          {workout.exercisesList.map((item, index) =>
+            <ExerciseItem
+              navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex })}
+              key={index}
+              exercise={{
+                ...item.exerciseModelId,
+                workoutId: workout.workoutId,
+                scheduleId: contextData.userData.student.currentSchedule.scheduleId,
+                ...item
+              }}
+            />
+          )}
+        </ScrollView>
+      </View>
+    </RefreshStudentData>
   );
 }
 

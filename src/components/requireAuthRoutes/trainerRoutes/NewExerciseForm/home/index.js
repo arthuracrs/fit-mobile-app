@@ -94,7 +94,7 @@ export default Home = ({ navigation, route }) => {
                         keyboardType='numeric'
                         value={formContextData.exercise.repetitions}
                         defaultValue={formContextData.exerciseModel.repetitions.toString()}
-                        placeholder={"Digite aqui a repetitions" + formContextData.exerciseModel.repetitions}
+                        placeholder={"Digite aqui as repetitions"}
                     />
                 </View>)
         },

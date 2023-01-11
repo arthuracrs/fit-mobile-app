@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 
 import AddNewExerciseButton from './addNewExerciseButton'
+import RefreshTrainerStudents from "../../../shared/refreshTrainerStudents";
 import Exercice from './exercise'
 import { GeneralStateContext } from '../../../../context'
 
@@ -31,51 +32,53 @@ export default function WorkoutScreen({ navigation, route }) {
 
   return (
     <>
-      < View style={styles.container}>
-        <Text style={styles.title}>{workout.name}</Text>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          justifyContent: 'space-between',
-        }}>
-          <Text style={styles.progress}>{t("TrainerWorkoutScreen.progress")} {doneExercises}/{totalExercices}</Text>
-          <View style={styles.switchContainer}>
-            <Text style={{ fontSize: 18, fontWeight: '500' }}>{t("TrainerWorkoutScreen.editMode")}</Text>
-            <Switch
-              trackColor={{ false: "#767577", true: "darkgray" }}
-              thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
-              onChange={toggleSwitch}
-              value={editMode}
-            />
-          </View>
-        </View>
-        <Text style={{
-          fontSize: 20,
-          textAlign: 'left',
-          borderTopWidth: 1,
-          borderColor: 'gray',
-          paddingTop: 10,
-          marginTop: 10
-        }}>Exercícios</Text>
-        {editMode && <AddNewExerciseButton handler={
-          () => navigation.navigate('NewExerciseForm', { scheduleId, workoutId: workout.workoutId })} />}
-        {workout.exercisesList.length !== 0 &&
-          <ScrollView>
-            {workout.exercisesList.map((item, index) =>
-              <Exercice
-                navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex, studentIndex })}
-                key={index}
-                exercise={{ workoutId: workout.workoutId, ...item, scheduleId }}
-                editMode={editMode}
+      <RefreshTrainerStudents>
+        < View style={styles.container}>
+          <Text style={styles.title}>{workout.name}</Text>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+          }}>
+            <Text style={styles.progress}>{t("TrainerWorkoutScreen.progress")} {doneExercises}/{totalExercices}</Text>
+            <View style={styles.switchContainer}>
+              <Text style={{ fontSize: 18, fontWeight: '500' }}>{t("TrainerWorkoutScreen.editMode")}</Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "darkgray" }}
+                thumbColor={editMode ? "lightgreen" : "#f4f3f4"}
+                onChange={toggleSwitch}
+                value={editMode}
               />
-            )}
-          </ScrollView>}
-        {workout.exercisesList.length === 0 &&
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>{t("TrainerWorkoutScreen.noExercises")}</Text>
-            <Text>{t("TrainerWorkoutScreen.clickEditToAddExercises")}</Text>
-          </View>}
-      </View>
+            </View>
+          </View>
+          <Text style={{
+            fontSize: 20,
+            textAlign: 'left',
+            borderTopWidth: 1,
+            borderColor: 'gray',
+            paddingTop: 10,
+            marginTop: 10
+          }}>Exercícios</Text>
+          {editMode && <AddNewExerciseButton handler={
+            () => navigation.navigate('NewExerciseForm', { scheduleId, workoutId: workout.workoutId })} />}
+          {workout.exercisesList.length !== 0 &&
+            <ScrollView>
+              {workout.exercisesList.map((item, index) =>
+                <Exercice
+                  navigateToExerciseScreen={() => navigation.navigate('Exercise', { exerciseIndex: index, workoutIndex, studentIndex })}
+                  key={index}
+                  exercise={{ workoutId: workout.workoutId, ...item, scheduleId }}
+                  editMode={editMode}
+                />
+              )}
+            </ScrollView>}
+          {workout.exercisesList.length === 0 &&
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <Text>{t("TrainerWorkoutScreen.noExercises")}</Text>
+              <Text>{t("TrainerWorkoutScreen.clickEditToAddExercises")}</Text>
+            </View>}
+        </View>
+      </RefreshTrainerStudents>
     </>
   );
 }

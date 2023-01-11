@@ -34,6 +34,7 @@ export default function StudentProfileScreen({ navigation, route }) {
                 />
               </View>
             </View>
+            <Button title="Avaliação" onPress={() => navigation.navigate('AssessmentScreen', { studentIndex })} />
             <Text style={{
               fontSize: 20,
               textAlign: 'left',
