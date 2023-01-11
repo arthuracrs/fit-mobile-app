@@ -6,17 +6,17 @@ import { GeneralStateContext } from '../../../../context'
 import { Auth } from '../../../../services/authentication'
 
 export default function StudentHomeScreen({ navigation }) {
-    const { t } = useTranslation();
-    const win = Dimensions.get('window');
+    const { t } = useTranslation()
+    const win = Dimensions.get('window')
 
     const contextData = useContext(GeneralStateContext);
     const authContext = useContext(Auth.AuthenticationContext);
-    // contextData.shouldLoadUser
 
     const styles = StyleSheet.create({
         container: {
             paddingTop: 50,
             flex: 1,
+            flexDirection: 'column',
             // backgroundColor: 'red',
             backgroundColor: 'rgba(0, 0, 0, 0.1)',
         },
@@ -27,11 +27,15 @@ export default function StudentHomeScreen({ navigation }) {
             backgroundColor: 'gold',
             margin: 20,
             marginBottom: -90,
+            maxWidth: win.width * .8,
+            height: win.height * .2,
+            maxHeight: 250,
+            alignSelf: 'center'
         },
         image: {
             resizeMode: "cover",
-            height: 200,
-            width: '100%'
+            height: '100%',
+            width: win.width * .8
         },
         mainContainer: {
             padding: 20,
