@@ -11,9 +11,9 @@ export default function SignupScreen({ navigation }) {
     const { t } = useTranslation()
 
     const [log, setLog] = useState("Log Vazio");
-    const [email, onChangeEmail] = useState("trainer@fit.test");
-    const [password, onChangePassword] = useState('Aaaaaa');
-    const [confirmPassword, onChangeConfirmPassword] = useState('');
+    const [email, onChangeEmail] = useState("a@a.com");
+    const [password, onChangePassword] = useState('1');
+    const [confirmPassword, onChangeConfirmPassword] = useState('1');
 
     const submitUser = async () => {
         authContext.SignUp({ email, password })

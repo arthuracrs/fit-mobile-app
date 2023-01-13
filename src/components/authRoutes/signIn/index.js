@@ -12,13 +12,12 @@ export default function SignInScreen({ navigation }) {
     const authContext = useContext(AuthenticationContext)
 
     const [errorMessage, setErrorMessage] = useState("");
-    const [email, onChangeEmail] = useState("a@g.com");
+    const [email, onChangeEmail] = useState("a@a.com");
     const [password, onChangePassword] = useState('1');
 
     const SignIn = async () => {
         try {
-            const result = await authContext.SignIn({ email, password })
-            if(result.error) setErrorMessage(result.error)
+            await authContext.SignIn({ email, password })
         } catch (error) {
             console.log(error)
             const errorCode = error.code;
@@ -47,7 +46,7 @@ export default function SignInScreen({ navigation }) {
                     keyboardType="default"
                 />
             </SafeAreaView>
-            <Text style={{textAlign: 'center'}}>{errorMessage}</Text>
+            <Text style={{ textAlign: 'center' }}>{errorMessage}</Text>
             <Button title={t("SignInScreen.signInButton")} onPress={SignIn} />
             <Button title={t("SignInScreen.signUpButton")} onPress={() => navigation.navigate('SignUp')} />
         </View>
